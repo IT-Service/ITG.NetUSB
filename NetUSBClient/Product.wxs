@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix
+	xmlns="http://schemas.microsoft.com/wix/2006/wi"
+>
+
+	<?define ProductVersion="01.00.0054.0100"?>
+	<?define ProductMajorVersion="1"?>
+	<?define ProductMinorVersion="0"?>
+	<?define ProductShortName="NetUSB"?>
+	<?define ProductInternalName="NetUSB"?>
+	<?define ProductDescription="Клиентское ПО для подкючения USB устройств через ip сети с использованием NetUSB-400i."?>
+	<?define ProductName="$(var.ProductShortName) v$(var.ProductVersion)"?>
+	<?define ProductCode="{DC949B5B-EA12-46B7-B81E-17B77AEAE93C}"?>
+	<?define UpgradeCode="{FBFFB0C4-74AC-42B5-A530-2FAACA7DCF4C}"?>
+	<?define Manufacturer="VScom"?>
+	<?define ManufacturerId="VScom"?>
+	
+	<?define ProductId="$(var.ManufacturerId).$(var.ProductInternalName).$(var.ProductMajorVersion).$(var.ProductMinorVersion)"?>
+	<?define ProductRegKey="SOFTWARE\$(var.Manufacturer)\$(var.ProductShortName)\$(var.ProductMajorVersion).$(var.ProductMinorVersion)"?>
+	<?define ProductProgIdPrefix="$(var.ManufacturerId).$(var.ProductInternalName)"?>
+	<?define ProductProgIdPostfix="$(var.ProductMajorVersion).$(var.ProductMinorVersion)"?>
+	<?define ProductProgId="$(var.ProductProgIdPrefix).$(var.ProductProgIdPostfix)"?>
+	
+	<?ifdef SingleMSIFile ?>
+	<?define Compressed="yes" ?>
+	<?define IsAdminImage="no" ?>
+	<?else?>
+	<?define Compressed="no" ?>
+	<?define IsAdminImage="yes" ?>
+	<?endif?>
+
+	<?if $(sys.BUILDARCH) = "x86" ?>
+	<?define PlatformPostfix="32" ?>
+	<?define SystemFolderId="SystemFolder" ?>
+	<?define SystemFolder="System32" ?>
+	<?define ProgramFilesFolderId="ProgramFilesFolder" ?>
+	<?define Win64="no" ?>
+	<?else?>
+	<?define PlatformPostfix="64" ?>
+	<?define SystemFolderId="System64Folder" ?>
+	<?define SystemFolder="System64" ?>
+	<?define ProgramFilesFolderId="ProgramFiles64Folder" ?>
+	<?define Win64="yes" ?>
+	<?endif?>
+
+	<?define ProductSettingsKey="$(var.Manufacturer)\$(var.ProductShortName)\$(var.ProductMajorVersion).$(var.ProductMinorVersion)" ?>
+
+	<Product
+		Id="$(var.ProductCode)"
+		Name="$(var.Manufacturer) $(var.ProductName)"
+		Version="$(var.ProductVersion)"
+		Language="1049"
+		Codepage="1251"
+		Manufacturer="$(var.Manufacturer)"
+		UpgradeCode="$(var.UpgradeCode)"
+	>
+		<Package
+			InstallerVersion="500"
+			InstallScope="perMachine"
+			InstallPrivileges="elevated"
+			AdminImage="$(var.IsAdminImage)"
+			Compressed="$(var.Compressed)"
+			Manufacturer="IT-Service"
+			SummaryCodepage="1251"
+			ShortNames="no"
+			Description="!(loc.PackageDescription) $(var.ProductName)."
+			Languages="1049"
+			Comments="!(loc.PackageDescription) $(var.ProductName)."
+			Keywords="Installer, $(var.ProductShortName)"
+		/>
+
+		<MajorUpgrade
+			DowngradeErrorMessage="!(loc.NewProductVersionExists)"
+			AllowSameVersionUpgrades="yes"
+			RemoveFeatures=" "
+			MigrateFeatures="yes"
+			Schedule="afterInstallExecute"
+		/>
+		
+		<!-- если находим оригинальный msi пакет (от производителя) - его удаляем -->
+		<Upgrade Id="{334C775F-12F0-46B1-A585-39ABEFA01EFC}">
+			<UpgradeVersion
+				Minimum="0.0.0.0"
+				RemoveFeatures="ALL"
+				Property="ORIGINAL_MSI_DETECTED"
+			/>
+		</Upgrade>
+
+		<Feature
+			Id="Product"
+			Level="1"
+			Absent="allow"
+			Display="2"
+			AllowAdvertise="yes"
+			InstallDefault="local"
+			TypicalDefault="install"
+			ConfigurableDirectory="APPLICATIONFOLDER"
+			Title="$(var.ProductShortName)"
+			Description="$(var.ProductName)"
+		>
+			<FeatureRef Id="Application" />
+		</Feature>
+
+		<Property Id="ARPREADME" Value="https://github.com/IT-Service/ITG.$(var.ProductInternalName)/blob/master/readme.md"/>
+		<Property Id="ARPCOMMENTS" Value="$(var.ProductDescription)"/>
+		<Property Id="ARPURLINFOABOUT" Value="http://github.com/IT-Service/ITG.$(var.ProductInternalName)/blob/master/readme.md"/>
+		<Property Id="ARPURLUPDATEINFO" Value="http://github.com/IT-Service/ITG.$(var.ProductInternalName)/tags"/>
+		<Property Id="ARPHELPLINK" Value="http://github.com/IT-Service/ITG.$(var.ProductInternalName)/wiki"/>
+		<Property Id="ARPCONTACT" Value="ИТ-Сервис"/>
+
+		<?ifdef AdminImage ?>
+		<Property Id="ARPNOMODIFY" Value="1"/>
+		<?endif?>
+		<!--<Property Id="ARPNOREMOVE" Value=""/>-->
+		<!--<Property Id="ARPNOREPAIR" Value=""/>-->
+		<!--<Property Id="ARPSYSTEMCOMPONENT" Value=""/>-->
+
+		<Property Id="MSIARPSETTINGSIDENTIFIER" Value="$(var.ProductSettingsKey)"/>
+
+		<Icon Id="Product.ico" SourceFile=".\Icons\Product.ico"/>
+		<Property Id="ARPPRODUCTICON" Value="Product.ico"/>
+
+		<Property Id="PRIMARYFOLDER" Value="APPLICATIONFOLDER" />
+		<SetProperty Id="ARPINSTALLLOCATION" Value="[APPLICATIONFOLDER]" Sequence="execute" Before="InstallInitialize">
+			<![CDATA[Installed]]>
+		</SetProperty>
+		<Property Id="APPLICATIONFOLDER" Admin="yes" />
+
+		<!--<Property Id="ARPSIZE" Value=""/>-->
+
+		<?ifdef AdminImage ?>
+		<!--<Property Id="MSIFASTINSTALL" Value="3"/>-->
+		<?endif?>
+
+		<!--<Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable"/>-->
+		
+		<MediaTemplate EmbedCab="$(var.Compressed)"/>
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="$(var.ProgramFilesFolderId)" Name="Program Files">
+				<Directory Id="ManufacturerProgramFolder" Name="$(var.ManufacturerId)">
+					<Directory Id="ProductProgramFolder" Name="$(var.ProductInternalName)">
+						<Directory Id="ProductVersionProgramFolder" Name="$(var.ProductMajorVersion).$(var.ProductMinorVersion)">
+							<Directory Id="APPLICATIONFOLDER"
+								ComponentGuidGenerationSeed="{ECA0BFDB-6CA3-419E-9B70-D023198CE476}"
+							>
+							</Directory>
+						</Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+			<Directory Id="DesktopFolder">
+				<Directory Id="PRODUCTDESKTOPFOLDER"/>
+			</Directory>
+			<Directory Id="ProgramMenuFolder">
+				<Directory Id="PRODUCTMENUFOLDER" Name="$(var.ProductShortName) $(var.ProductMajorVersion).$(var.ProductMinorVersion)"/>
+			</Directory>
+			<Directory Id="PersonalFolder" />
+			<!--<Directory Id="TemplateFolder"/>-->
+			<Directory Id="TempFolder"/>
+			<Directory Id="WindowsFolder" Name="Windows">
+				<Directory Id="$(var.SystemFolderId)" Name="$(var.SystemFolder)">
+				</Directory>
+			</Directory>
+		</Directory>
+
+		<?define ShFolders=PRODUCTMENUFOLDER;PRODUCTDESKTOPFOLDER?>
+
+		<!-- возможность отключения создания ярлыков -->
+		<InstallExecuteSequence>
+			<CreateShortcuts Sequence="4500">
+				<![CDATA[NOT DISABLESHORTCUTS="Yes"]]>
+			</CreateShortcuts>
+		</InstallExecuteSequence>
+
+		<Property Id="DISABLESHORTCUTS" Value="No" Admin="yes"/>
+		<!-- возможность отключения создания ярлыков - конец -->
+
+		<!-- возможность отключения создания ярлыков по одному -->
+		<?foreach ShFolder in $(var.ShFolders)?>
+		
+		<SetDirectory Id="$(var.ShFolder)" Value="[TempFolder]">
+			<![CDATA[DISABLE$(var.ShFolder)SHORTCUTS="Yes"]]>
+		</SetDirectory>
+
+		<Property Id="DISABLE$(var.ShFolder)SHORTCUTS" Value="No" Admin="yes"/>
+		
+		<?endforeach?>
+		<!-- возможность отключения создания ярлыков по одному - конец -->
+
+		<?ifndef AdminImage ?>
+
+		<UI>
+			<!--<UIRef Id="WixUI_Mondo"/>-->
+			<UIRef Id="WixUI_MondoWithoutLicenseDlg"/>
+			<!--<UIRef Id="WixUI_ErrorProgressText" />-->
+			<?ifdef ShowAppLaunchDialog ?>
+			<Publish Dialog="ExitDialog"
+				Control="Finish"
+				Event="DoAction"
+				Value="LaunchApplication"
+		>
+				<![CDATA[WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND NOT Installed]]>
+			</Publish>
+			<?endif?>
+		</UI>
+		<Property Id="WixAppFolder" Value="WixPerMachineFolder" />
+		<WixVariable Id="WixUISupportPerUser" Value="0" />
+		<!--<WixVariable Id="WixUILicenseRtf" Value="eula.rtf" />-->
+
+		<?ifdef ShowAppLaunchDialog ?>
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.LaunchAfterInstall)" />
+		<Property Id="WixShellExecTarget" Value="[#application]" />
+		<CustomAction
+			Id="LaunchApplication"
+			BinaryKey="WixCA"
+			DllEntry="WixShellExec"
+			Impersonate="yes"
+		/>
+		<?endif?>
+
+		<?endif?>
+
+	</Product>
+
+	<?include application.wxi ?>
+
+	<?include WixUI_MondoWithoutLicenseDlg.wxi?>
+
+</Wix>
