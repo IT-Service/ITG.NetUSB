@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Admin image</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.7</ProductVersion>
+    <ProjectGuid>fc58b586-ddc0-4952-9ad6-eb28b36b681d</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>NetUSBClient</OutputName>
+    <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+    <Name>NetUSBClient</Name>
+    <Cultures>ru-RU</Cultures>
+    <SuppressPdbOutput>True</SuppressPdbOutput>
+    <OutputPath>$(SolutionDir)bin\$(Configuration)\$(Platform)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\$(Platform)\</IntermediateOutputPath>
+    <SuppressIces>ICE09;ICE69;ICE90</SuppressIces>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Admin image' ">
+    <DefineConstants>AdminImage</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Single .msi file' ">
+    <DefineConstants>SingleMSIFile</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Admin image|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Single .msi file|x86' ">
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SourceDir" />
+    <Folder Include="Icons" />
+    <Folder Include="SourceDir\ProgramFiles" />
+    <Folder Include="SourceDir\System32" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="application.wxi" />
+    <Content Include="Common.RemoveAutoFile.wxi" />
+    <Content Include="Icons\help.ico" />
+    <Content Include="Icons\Product.ico" />
+    <Content Include="sign.bat" />
+    <Content Include="WixUI_MondoWithoutLicenseDlg.wxi" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common.1049.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <PropertyGroup>
+    <PostBuildEvent>$(ProjectDir)sign.bat "!(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
