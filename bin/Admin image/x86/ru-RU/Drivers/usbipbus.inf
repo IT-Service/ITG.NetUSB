@@ -1,0 +1,79 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;    Copyright © 2007, MosChip Semiconductor Technology Limited
+;    usbipbus.inf  
+;    INF file for installing Virtual USB-Over-IP Bus device driver
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=USB
+ClassGuid={36fc9e60-c465-11cf-8056-444553540000}
+Provider=%ProviderName%
+DriverVer=12/08/2012,1.0.0.45	;MM/DD/YYYY
+CatalogFile=usboip.cat
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+;usbipbus.inf  = 1,,
+;usbipbus.sys  = 1,,
+
+;-------------- Class section
+[ClassInstall32]
+Addreg=VUSBClassReg     
+
+[VUSBClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,100
+HKR,,DeviceCharacteristics,0x10001,0x100     ;Use same security checks on relative opens
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GRGWGX;;;BA)(A;;GR;;;WD)(A;;GR;;;RC)"
+					     ;Allow generic all access to system and built-in Admin. 
+                                             ;This one overrides the security set by the driver
+
+;-------------- Virtual USB-Over-IP Bus Install Section
+[Manufacturer]
+%MfgName%=Standard
+
+[Standard]
+; DisplayName       		Section           DeviceId
+; -----------       		-------           --------
+%VUSBDevice.DeviceDesc%=VUSB_Device, USB\VirtualUSB
+
+[VUSB_Device.NT]
+CopyFiles=VUSB_Device.NT.Copy
+
+[VUSB_Device.NT.Copy]
+;usbipbus.sys
+;usbipbus.inf
+
+[VUSB_Device.NT.HW]
+AddReg=VUSB_Device.NT.HW.AddReg
+
+[VUSB_Device.NT.HW.AddReg]
+HKR,,"BeepCount",0x00010003,4
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GRGWGX;;;BA)(A;;GR;;;WD)(A;;GR;;;RC)"
+
+;-------------- Service installation
+[VUSB_Device.NT.Services]
+AddService = VUSB, %SPSVCINST_ASSOCSERVICE%, VUSB_Service_Inst
+
+[VUSB_Service_Inst]
+DisplayName    = %VUSB.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START 
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\usbipbus.sys
+LoadOrderGroup = Extended Base
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ProviderName = "MosChip Semiconductor Technology"
+MfgName = "MosChip Semiconductor Technology"
+ClassName = "VUSB"
+DiskId1 = "Virtual USB-Over-IP Bus Installation Disk #1"
+VUSBDevice.DeviceDesc = "Virtual USB-Over-IP Bus"
+VUSB.SVCDESC = "Virtual USB-Over-IP Bus"

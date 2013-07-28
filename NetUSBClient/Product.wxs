@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix
 	xmlns="http://schemas.microsoft.com/wix/2006/wi"
+	xmlns:difx="http://schemas.microsoft.com/wix/DifxAppExtension"
 >
 
 	<?define ProductVersion="01.00.0054.0100"?>

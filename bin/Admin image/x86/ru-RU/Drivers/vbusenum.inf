@@ -1,0 +1,77 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;	(c) Copyright MosChip Semiconductor Technology Limited
+;	vbusenum.inf
+;	INF file for installing Virtual USB-Over-IP Bus Enumerator driver
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider=%ProviderName%
+DriverVer=12/08/2012,1.0.0.25	;MM/DD/YYYY
+CatalogFile=usboip.cat
+
+[DestinationDirs]
+DefaultDestDir = 12
+;Inf_Dir = 17
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+vbusenum.sys  = 1,,
+;usbipbus.inf = 1,,
+usbipbus.sys = 1,,
+
+;**********************************************
+; Virtual USB-Over-IP Bus Enumerator Install Section
+;**********************************************
+
+[Manufacturer]
+%MfgName%=Standard
+
+[Standard]
+;
+; These are the virtual USB bus enumerator pnp ids
+;
+
+%VUSBBus.DeviceDesc%=VUSBBus_Device, root\vbusenum
+
+[VUSBBus_Device.NT]
+CopyFiles=Drivers_Dir
+;CopyINF=usbipbus.inf ;Inf_Dir
+
+[VUSBBus_Device.NT.HW]
+AddReg=VUSBBus_Device.NT.AddReg
+
+[VUSBBus_Device.NT.AddReg]                            
+HKR,,DeviceCharacteristics,0x10001,0x0100         ; Use same security checks on relative opens
+
+[Drivers_Dir]
+vbusenum.sys
+usbipbus.sys
+
+;[Inf_Dir]
+;usbipbus.inf
+
+;-------------- Service installation
+[VUSBBus_Device.NT.Services]
+AddService = vbusenum,%SPSVCINST_ASSOCSERVICE%, vbusenum_Service_Inst
+
+; -------------- vbusenum driver install sections
+[vbusenum_Service_Inst]
+DisplayName    = %vbusenum.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START 
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\vbusenum.sys
+LoadOrderGroup = Extended Base
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ProviderName = "MosChip Semiconductor Technology"
+MfgName = "MosChip Semiconductor Technology"
+DiskId1 = "Virtual USB-Over-IP Installation Disk #1"
+VUSBBus.DeviceDesc = "Virtual USB-Over-IP Bus Enumerator"
+vbusenum.SVCDESC = "Virtual USB-Over-IP Bus Enumerator"

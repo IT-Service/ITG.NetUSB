@@ -24,15 +24,15 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Single .msi file' ">
     <DefineConstants>SingleMSIFile</DefineConstants>
   </PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Admin image|x86' ">
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Single .msi file|x86' ">
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Admin image|x64' ">
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Single .msi file|x64' ">
-	</PropertyGroup>
-	<ItemGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Admin image|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Single .msi file|x86' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Admin image|x64' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Single .msi file|x64' ">
+  </PropertyGroup>
+  <ItemGroup>
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +50,7 @@
     <Content Include="application.wxi" />
     <Content Include="Icons\help.ico" />
     <Content Include="Icons\Product.ico" />
+    <Content Include="NetUSBDrivers.wxi" />
     <Content Include="sign.bat" />
     <Content Include="SourceDir\Drv\x86\usbipbus.inf" />
     <Content Include="SourceDir\Drv\x86\usbipbus.sys" />
@@ -81,13 +82,23 @@
   <ItemGroup>
     <EmbeddedResource Include="Common.1049.wxl" />
   </ItemGroup>
-  <ItemGroup>
-    <WixExtension Include="WixUIExtension">
+	<ItemGroup>
+		<WixExtension Include="WixUIExtension">
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
-  </ItemGroup>
-  <Import Project="$(WixTargetsPath)" />
+		<WixExtension Include="WixDifxAppExtension">
+			<HintPath>$(WixExtDir)\WixDifxAppExtension.dll</HintPath>
+			<Name>WixDifxAppExtension</Name>
+		</WixExtension>
+	</ItemGroup>
+	<ItemGroup>
+		<WixLibrary Include="difxapp">
+			<HintPath>$(WixExtDir)\difxapp_$(Platform).wixlib</HintPath>
+			<Name>difxapp</Name>
+		</WixLibrary>
+	</ItemGroup>
+	<Import Project="$(WixTargetsPath)" />
   <PropertyGroup>
     <PostBuildEvent>$(ProjectDir)sign.bat "!(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
