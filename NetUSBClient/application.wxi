@@ -50,6 +50,7 @@
 			<ComponentRef	Id="$(var.AppInternalName)" Primary="yes"/>
 			<ComponentRef Id="$(var.AppInternalName).AppReg"/>
 			<ComponentRef Id="UsbIpSettings.dll"/>
+			<ComponentRef Id="TftpServer.exe"/>
 		</ComponentGroup>
 
 		<Icon Id="$(var.AppIcon)" SourceFile=".\Icons\Product.ico"/>
@@ -233,6 +234,18 @@
 					Name="UsbIpSettings.dll"
 					KeyPath="yes"
 					Vital="yes"
+				/>
+			</Component>
+
+			<Component
+				Id="TftpServer.exe"
+				Guid="{7DB7B878-2D86-49D9-8913-CC0F886B412D}"
+				Location="local"
+			>
+				<File
+					Name="TftpServer.exe"
+					KeyPath="yes"
+					Vital="no"
 				/>
 			</Component>
 
