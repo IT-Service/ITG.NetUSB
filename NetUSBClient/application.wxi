@@ -9,6 +9,8 @@
 		<?define AppShortName="$(var.ProductShortName)"?>
 		<?ifdef AppInternalName?><?undef AppInternalName?><?endif?>
 		<?define AppInternalName="$(var.ProductInternalName)"?>
+		<?ifdef AppServiceName?><?undef AppServiceName?><?endif?>
+		<?define AppServiceName="$(var.ProductInternalName)Service"?>
 		<?ifdef AppDirectory?><?undef AppDirectory?><?endif?>
 		<?define AppDirectory="APPLICATIONFOLDER"?>
 		<?ifdef AppDescription?><?undef AppDescription?><?endif?>
@@ -132,6 +134,52 @@
 					On="uninstall"
 				/>
 				<?endforeach?>
+				<?ifdef AppShortName?>
+				<?undef AppShortName?>
+				<?endif?>
+				<?define AppShortName="$(var.ProductShortName)"?>
+				<?ifdef AppInternalName?>
+				<?undef AppInternalName?>
+				<?endif?>
+				<?define AppInternalName="$(var.ProductInternalName)"?>
+				<?ifdef AppDirectory?>
+				<?undef AppDirectory?>
+				<?endif?>
+				<?define AppDirectory="APPLICATIONFOLDER"?>
+				<?ifdef AppDescription?>
+				<?undef AppDescription?>
+				<?endif?>
+				<?define AppDescription="$(var.ProductDescription)"?>
+				<ServiceInstall
+					Name="$(var.AppServiceName)"
+					DisplayName="$(var.AppInternalName)"
+					Description="$(var.AppDescription)"
+					Type="ownProcess"
+					Arguments="/mode=Service"
+					ErrorControl="normal"
+					Interactive="no"
+					Start="auto"
+					Account="NT AUTHORITY\LocalSystem"
+					Vital="yes"
+				>
+					<ServiceDependency Id="Tcpip" Group="no" />
+					<ServiceConfigFailureActions
+						OnInstall="yes"
+						OnReinstall="yes"
+						ResetPeriod="86400"
+					>
+						<Failure Action="restartService" Delay="60000"/>
+						<Failure Action="restartService" Delay="60000"/>
+						<Failure Action="restartService" Delay="60000"/>
+					</ServiceConfigFailureActions>
+				</ServiceInstall>
+				<ServiceControl
+					Id="$(var.AppServiceName)"
+					Name="$(var.AppServiceName)"
+					Start="install"
+					Stop="both"
+					Wait="yes"
+				/>
 			</Component>
 
 			<Component

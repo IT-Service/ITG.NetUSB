@@ -7,8 +7,8 @@
 	<?define ProductVersion="01.00.0054.0100"?>
 	<?define ProductMajorVersion="1"?>
 	<?define ProductMinorVersion="0"?>
-	<?define ProductShortName="NetUSB"?>
-	<?define ProductInternalName="NetUSB"?>
+	<?define ProductShortName="USBIP"?>
+	<?define ProductInternalName="UsbIp"?>
 	<?define ProductDescription="Клиентское ПО для подкючения USB устройств через ip сети с использованием NetUSB-400i"?>
 	<?define ProductName="$(var.ProductShortName) v$(var.ProductVersion)"?>
 	<?define ProductCode="{DC949B5B-EA12-46B7-B81E-17B77AEAE93C}"?>
