@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include
+	xmlns="http://schemas.microsoft.com/wix/2006/wi"
+>
+	<Fragment>
+
+		<?ifdef AppShortName?><?undef AppShortName?><?endif?>
+		<?define AppShortName="$(var.ProductShortName)"?>
+		<?ifdef AppInternalName?><?undef AppInternalName?><?endif?>
+		<?define AppInternalName="$(var.ProductInternalName)"?>
+		<?ifdef AppDirectory?><?undef AppDirectory?><?endif?>
+		<?define AppDirectory="APPLICATIONFOLDER"?>
+		<?ifdef AppDescription?><?undef AppDescription?><?endif?>
+		<?define AppDescription="$(var.ProductDescription)"?>
+		<?ifdef AppFileName?><?undef AppFileName?><?endif?>
+		<?define AppFileName="NUPortAdmin.exe"?>
+		<?ifdef AppNameAliases?><?undef AppNameAliases?><?endif?>
+		<?define AppNameAliases="$(var.AppFileName);NetUSB.exe;USB-over-ip.exe;USBip.exe"?>
+		<?ifdef AppIcon?><?undef AppIcon?><?endif?>
+		<?define AppIcon="$(var.AppFileName)"?>
+
+		<?ifdef AppRegKey?><?undef AppRegKey?><?endif?>
+		<?define AppRegKey="$(var.ProductRegKey)"?>
+
+		<?ifdef AppProgId?><?undef AppProgId?><?endif?>
+		<?define AppProgId="$(var.ProductProgIdPrefix).$(var.ProductProgIdPostfix)"?>
+		<?ifdef AppProgIdDescription?><?undef AppProgIdDescription?><?endif?>
+		<?define AppProgIdDescription="$(var.AppDescription)"?>
+
+		<Feature
+			Id="Application"
+			Level="1"
+			Absent="disallow"
+			Display="2"
+			AllowAdvertise="yes"
+			InstallDefault="local"
+			TypicalDefault="install"
+			Title="$(var.AppShortName)"
+			Description="$(var.AppDescription)."
+		>
+			<ComponentGroupRef Id="ApplicationComponents" Primary="yes"/>
+		</Feature>
+
+		<ComponentGroup Id="ApplicationComponents">
+			<ComponentRef	Id="$(var.AppInternalName)" Primary="yes"/>
+			<ComponentRef Id="$(var.AppInternalName).AppReg"/>
+		</ComponentGroup>
+
+		<Icon Id="$(var.AppIcon)" SourceFile=".\Icons\Product.ico"/>
+
+		<DirectoryRef Id="$(var.AppDirectory)" FileSource=".\SourceDir\ProgramFiles">
+			<Component
+				Id="$(var.AppInternalName)"
+				Guid="{B91AB878-D1F9-4925-BC0A-4BEACE611D09}"
+				Location="local"
+			>
+				<File
+					Name="$(var.AppFileName)"
+					KeyPath="yes"
+					Vital="yes"
+					Checksum="yes"
+				>
+					<?foreach ShFolder in $(var.ShFolders)?>
+					<Shortcut
+						Id="$(var.AppInternalName).Shortcut.$(var.ShFolder)"
+						Directory="$(var.ShFolder)"
+						Name="$(var.AppShortName)"
+						Description="$(var.AppDescription)"
+						WorkingDirectory="$(var.AppDirectory)"
+						Show="normal"
+						Icon="$(var.AppIcon)"
+						Advertise="yes"
+					>
+						<!--<ShortcutProperty Key="System.AppUserModel.ID" Value="$(var.AppProgId)"/>-->
+					</Shortcut>
+					<?endforeach?>
+				</File>
+				<?foreach ShFolder in $(var.ShFolders)?>
+				<RemoveFolder
+					Id="$(var.AppInternalName).ShFolder.$(var.ShFolder)"
+					Directory="$(var.ShFolder)"
+					On="uninstall"
+				/>
+				<?endforeach?>
+			</Component>
+
+			<Component
+				Id="$(var.AppInternalName).AppReg"
+			>
+				<!-- http://msdn.microsoft.com/ru-RU/library/windows/desktop/ee872121(v=vs.85).aspx -->
+				<RegistryKey
+					Root="HKMU"
+					Key="SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths"
+				>
+					<?foreach AppFileNameAlias in $(var.AppNameAliases)?>
+					<RegistryKey Key="$(var.AppFileNameAlias)">
+						<RegistryValue Type="string" Value="[#$(var.AppFileName)]" />
+					</RegistryKey>
+					<?endforeach?>
+				</RegistryKey>
+				<RegistryKey
+					Root="HKCR"
+					Key="Applications"
+				>
+					<RegistryKey Key="$(var.AppFileName)">
+						<RegistryValue Type="string" Value="[#$(var.AppFileName)]" />
+						<RegistryValue Name="FriendlyAppName" Type="string" Value="$(var.AppShortName)" />
+						<RegistryValue Name="NoOpenWith" Type="integer" Value="0" />
+					</RegistryKey>
+				</RegistryKey>
+				<RegistryKey
+					Root="HKMU"
+					Key="SOFTWARE\RegisteredApplications"
+				>
+					<RegistryValue Name="$(var.AppProgId)" Type="string" Value="$(var.AppRegKey)\Capabilities" />
+				</RegistryKey>
+				<RegistryKey
+					Root="HKMU"
+					Key="$(var.AppRegKey)\Capabilities"
+				>
+					<RegistryValue Name="ApplicationName" Type="string" Value="$(var.AppShortName)" KeyPath="yes" />
+					<RegistryValue Name="ApplicationDescription" Type="string" Value="$(var.AppDescription)" />
+					<RegistryValue Name="Hidden" Type="integer" Value="1" />
+				</RegistryKey>
+			</Component>
+		</DirectoryRef>
+
+	</Fragment>
+</Include>

@@ -8,7 +8,7 @@
 	<?define ProductMinorVersion="0"?>
 	<?define ProductShortName="NetUSB"?>
 	<?define ProductInternalName="NetUSB"?>
-	<?define ProductDescription="Клиентское ПО для подкючения USB устройств через ip сети с использованием NetUSB-400i."?>
+	<?define ProductDescription="Клиентское ПО для подкючения USB устройств через ip сети с использованием NetUSB-400i"?>
 	<?define ProductName="$(var.ProductShortName) v$(var.ProductVersion)"?>
 	<?define ProductCode="{DC949B5B-EA12-46B7-B81E-17B77AEAE93C}"?>
 	<?define UpgradeCode="{FBFFB0C4-74AC-42B5-A530-2FAACA7DCF4C}"?>
@@ -90,13 +90,13 @@
 			Id="Product"
 			Level="1"
 			Absent="allow"
-			Display="2"
+			Display="expand"
 			AllowAdvertise="yes"
 			InstallDefault="local"
 			TypicalDefault="install"
 			ConfigurableDirectory="APPLICATIONFOLDER"
 			Title="$(var.ProductShortName)"
-			Description="$(var.ProductName)"
+			Description="$(var.ProductDescription)"
 		>
 			<FeatureRef Id="Application" />
 			<FeatureRef Id="ApplicationHelp" />

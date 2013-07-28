@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include
+	xmlns="http://schemas.microsoft.com/wix/2006/wi"
+>
+	<Fragment>
+
+		<?ifdef AppShortName?><?undef AppShortName?><?endif?>
+		<?define AppShortName="$(var.ProductShortName) - !(loc.Help)"?>
+		<?ifdef AppInternalName?><?undef AppInternalName?><?endif?>
+		<?define AppInternalName="$(var.ProductInternalName)Help"?>
+		<?ifdef AppDirectory?><?undef AppDirectory?><?endif?>
+		<?define AppDirectory="APPLICATIONFOLDER"?>
+		<?ifdef AppDescription?><?undef AppDescription?><?endif?>
+		<?define AppDescription="$(var.ProductDescription) - !(loc.Help)"?>
+		<?ifdef AppFileName?><?undef AppFileName?><?endif?>
+		<?define AppFileName="USB-ServerHelp.chm"?>
+		<?ifdef AppIcon?><?undef AppIcon?><?endif?>
+		<?define AppIcon="Help.ico"?>
+
+		<Feature
+			Id="ApplicationHelp"
+			Level="100"
+			Absent="allow"
+			Display="4"
+			AllowAdvertise="yes"
+			InstallDefault="local"
+			TypicalDefault="install"
+			Title="$(var.AppShortName)"
+			Description="$(var.AppDescription)."
+		>
+			<ComponentGroupRef Id="ApplicationHelpComponents" Primary="yes"/>
+		</Feature>
+
+		<ComponentGroup Id="ApplicationHelpComponents">
+			<ComponentRef	Id="$(var.AppInternalName)" Primary="yes"/>
+		</ComponentGroup>
+
+		<Icon Id="$(var.AppIcon)" SourceFile=".\Icons\Help.ico"/>
+
+		<DirectoryRef Id="$(var.AppDirectory)" FileSource=".\SourceDir\ProgramFiles">
+			<Component
+				Id="$(var.AppInternalName)"
+				Guid="{9969858B-09FB-46bc-8960-7743F3C0BE04}"
+				Location="either"
+			>
+				<File
+					Name="$(var.AppFileName)"
+					KeyPath="yes"
+					Vital="no"
+				>
+					<?foreach ShFolder in PRODUCTMENUFOLDER?>
+					<Shortcut
+						Id="$(var.AppInternalName).Shortcut.$(var.ShFolder)"
+						Directory="$(var.ShFolder)"
+						Name="$(var.AppShortName)"
+						Description="$(var.AppDescription)"
+						WorkingDirectory="$(var.AppDirectory)"
+						Show="normal"
+						Icon="$(var.AppIcon)"
+						Advertise="yes"
+					/>
+					<?endforeach?>
+				</File>
+				<?foreach ShFolder in PRODUCTMENUFOLDER?>
+				<RemoveFolder
+					Id="$(var.AppInternalName).ShFolder.$(var.ShFolder)"
+					Directory="$(var.ShFolder)"
+					On="uninstall"
+				/>
+				<?endforeach?>
+			</Component>
+		</DirectoryRef>
+
+	</Fragment>
+</Include>
