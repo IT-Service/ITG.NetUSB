@@ -21,7 +21,7 @@
 		<?define AppIcon="$(var.AppFileName)"?>
 
 		<?ifdef AppRegKey?><?undef AppRegKey?><?endif?>
-		<?define AppRegKey="$(var.ProductRegKey)"?>
+		<?define AppRegKey="SOFTWARE\NUPort"?>
 
 		<?ifdef AppProgId?><?undef AppProgId?><?endif?>
 		<?define AppProgId="$(var.ProductProgIdPrefix).$(var.ProductProgIdPostfix)"?>
@@ -50,6 +50,53 @@
 		</ComponentGroup>
 
 		<Icon Id="$(var.AppIcon)" SourceFile=".\Icons\Product.ico"/>
+
+		<!-- To Set the Application level Default AutoConnect Value
+		Can Take Values as 1 - TRUE AutoConnect Enable, or 0 - FALSE, AutoConnect Disable -->
+		<Property Id="DEFAULT_AUTOCONECT_VALUE" Admin="yes" Value="1"/>
+
+		<!-- To Set the Application level Default AutoReConnect Value
+		Can Take Values as 1 - TRUE AutoReConnect Enable, or 0 - FALSE, AutoReConnect Disable -->
+		<Property Id="DEFAULT_AUTORECONECT_VALUE" Admin="yes" Value="1"/>
+
+		<!-- Time given for application launch to happen after connecting the device -->
+		<Property Id="AUTOLAUNCH_DELAY" Admin="yes" Value="1000"/>
+
+		<!-- Default value for Auto Launching the USB Server AdminUtility -->
+		<Property Id="DEFAULT_START_AUTOLAUNCH" Admin="yes" Value="0"/>
+
+		<!-- Default value for Show Window of USB Server AdminUtility -->
+		<Property Id="DEFAULT_SHOW_WIN_MINIMIZED" Admin="yes" Value="1"/>
+
+		<!-- Default value for auto start device mapping in USB Server AdminUtility -->
+		<Property Id="DEFAULT_START_DEV_MAP" Admin="yes" Value="1"/>
+
+		<!-- Port no. to be used for Server Manager -->
+		<Property Id="CONFIGINTF_PORT" Admin="yes" Value="1341"/>
+
+		<!-- Port no. on which we receive the broadcast information from the server -->
+		<Property Id="DEFAULT_BROADCAST_PORTNO" Admin="yes" Value="6000"/>
+
+		<!-- Port no. to be used for Driver-Server comm -->
+		<Property Id="USBIP_TCPPORTNO" Admin="yes" Value="3240"/>
+
+		<!-- Port no. to be used for Device Request Feature -->
+		<Property Id="DEVICE_REQUEST_PORTNO" Admin="yes" Value="6133"/>
+
+		<!-- Port no. to be used in QuickConfigUtility -->
+		<Property Id="UDPSERVER_PORT" Admin="yes" Value="1341"/>
+
+		<!-- Default Value for Network Throttling -->
+		<Property Id="DEFAULT_GENERAL_NETWORK_THROTTLE" Admin="yes" Value="0"/>
+
+		<!-- Default Value for 'Unload Wait Time' in milli second
+		Unload Wait Time: Amount of time to wait to assume the server is not present
+		                  on the network, when no message is received from it.
+		Note:Specify a multiple of refresh period. -->
+		<Property Id="DEFAULT_UNLOAD_WAITTIME" Admin="yes" Value="5000"/>
+
+		<!-- Default value for Boot Start -->
+		<Property Id="DEFAULT_BOOTSTART" Admin="yes" Value="1"/>
 
 		<DirectoryRef Id="$(var.AppDirectory)" FileSource=".\SourceDir\ProgramFiles\$(sys.BUILDARCH)">
 			<Component
@@ -121,9 +168,26 @@
 					Root="HKMU"
 					Key="$(var.AppRegKey)\Capabilities"
 				>
-					<RegistryValue Name="ApplicationName" Type="string" Value="$(var.AppShortName)" KeyPath="yes" />
-					<RegistryValue Name="ApplicationDescription" Type="string" Value="$(var.AppDescription)" />
-					<RegistryValue Name="Hidden" Type="integer" Value="1" />
+					<RegistryKey Key="Capabilities">
+						<RegistryValue Name="ApplicationName" Type="string" Value="$(var.AppShortName)" KeyPath="yes" />
+						<RegistryValue Name="ApplicationDescription" Type="string" Value="$(var.AppDescription)" />
+						<RegistryValue Name="Hidden" Type="integer" Value="1" />
+					</RegistryKey>
+					<RegistryKey Key="Parameters">
+						<RegistryValue Name="AppTraceLevel" Type="integer" Value="3"/>
+						<RegistryValue Name="AppGuiRefreshPeriod" Type="integer" Value="[DEFAULT_UNLOAD_WAITTIME]"/>
+						<RegistryValue Name="AppStopDeviceMappingPeriod" Type="integer" Value="180000"/>
+						<RegistryValue Name="AppAutoConnect" Type="integer" Value="[DEFAULT_AUTOCONECT_VALUE]"/>
+						<RegistryValue Name="AppAutoReconnect" Type="integer" Value="[DEFAULT_AUTORECONECT_VALUE]"/>
+						<RegistryValue Name="AppAutoLaunch" Type="integer" Value="[DEFAULT_START_AUTOLAUNCH]"/>
+						<RegistryValue Name="AppStartMinimized" Type="integer" Value="[DEFAULT_SHOW_WIN_MINIMIZED]"/>
+						<RegistryValue Name="AppAutoStartDevmap" Type="integer" Value="[DEFAULT_START_DEV_MAP]"/>
+						<RegistryValue Name="StartService" Type="integer" Value="[DEFAULT_BOOTSTART]"/>
+						<RegistryValue Name="GenNetworkThrottle" Type="integer" Value="[DEFAULT_GENERAL_NETWORK_THROTTLE]"/>
+						<RegistryValue Name="BroadcastPortNumber" Type="integer" Value="[DEFAULT_BROADCAST_PORTNO]"/>
+					</RegistryKey>
+					<RegistryValue Name="NUPortFolderPath" Type="string" Value="[$(var.AppDirectory)]"/>
+					<RegistryValue Name="EndTaskAppFlag" Type="integer" Value="0"/>
 				</RegistryKey>
 			</Component>
 
