@@ -48,7 +48,7 @@
 
 		<Icon Id="$(var.AppIcon)" SourceFile=".\Icons\Product.ico"/>
 
-		<DirectoryRef Id="$(var.AppDirectory)" FileSource=".\SourceDir\ProgramFiles">
+		<DirectoryRef Id="$(var.AppDirectory)" FileSource=".\SourceDir\ProgramFiles\$(sys.BUILDARCH)">
 			<Component
 				Id="$(var.AppInternalName)"
 				Guid="{B91AB878-D1F9-4925-BC0A-4BEACE611D09}"

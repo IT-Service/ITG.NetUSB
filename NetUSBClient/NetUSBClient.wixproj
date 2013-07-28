@@ -15,7 +15,7 @@
     <SuppressPdbOutput>True</SuppressPdbOutput>
     <OutputPath>$(SolutionDir)bin\$(Configuration)\$(Platform)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\$(Platform)\</IntermediateOutputPath>
-    <SuppressIces>ICE09;ICE69;ICE90</SuppressIces>
+    <SuppressIces>ICE09;ICE69;ICE90;ICE39;ICE61</SuppressIces>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Admin image' ">
@@ -24,17 +24,26 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Single .msi file' ">
     <DefineConstants>SingleMSIFile</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Admin image|x86' ">
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Single .msi file|x86' ">
-  </PropertyGroup>
-  <ItemGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Admin image|x86' ">
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Single .msi file|x86' ">
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Admin image|x64' ">
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Single .msi file|x64' ">
+	</PropertyGroup>
+	<ItemGroup>
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SourceDir" />
     <Folder Include="Icons" />
+    <Folder Include="SourceDir\Drv" />
+    <Folder Include="SourceDir\Drv\x86" />
+    <Folder Include="SourceDir\Drv\x64" />
     <Folder Include="SourceDir\ProgramFiles" />
+    <Folder Include="SourceDir\ProgramFiles\x86" />
+    <Folder Include="SourceDir\ProgramFiles\x64" />
     <Folder Include="SourceDir\System32" />
   </ItemGroup>
   <ItemGroup>
@@ -42,12 +51,30 @@
     <Content Include="Icons\help.ico" />
     <Content Include="Icons\Product.ico" />
     <Content Include="sign.bat" />
-    <Content Include="SourceDir\ProgramFiles\NUPortAdmin.exe" />
+    <Content Include="SourceDir\Drv\x86\usbipbus.inf" />
+    <Content Include="SourceDir\Drv\x86\usbipbus.sys" />
+    <Content Include="SourceDir\Drv\x86\usboip.cat" />
+    <Content Include="SourceDir\Drv\x86\vbusenum.inf" />
+    <Content Include="SourceDir\Drv\x86\vbusenum.sys" />
+    <Content Include="SourceDir\Drv\x64\usbipbus.inf" />
+    <Content Include="SourceDir\Drv\x64\usbipbus.sys" />
+    <Content Include="SourceDir\Drv\x64\usboip.cat" />
+    <Content Include="SourceDir\Drv\x64\vbusenum.inf" />
+    <Content Include="SourceDir\Drv\x64\vbusenum.sys" />
+    <Content Include="SourceDir\Drv\x64\[itg] update.cmd" />
     <Content Include="SourceDir\ProgramFiles\NUPortCustom.ini" />
-    <Content Include="SourceDir\ProgramFiles\QuickConfigDlg.exe" />
-    <Content Include="SourceDir\ProgramFiles\TftpServer.exe" />
+    <Content Include="SourceDir\ProgramFiles\QuickConfigLang.ini" />
     <Content Include="SourceDir\ProgramFiles\USB-ServerHelp.chm" />
-    <Content Include="SourceDir\ProgramFiles\UsbIpSettings.dll" />
+    <Content Include="SourceDir\ProgramFiles\USBIPAdminLang.ini" />
+    <Content Include="SourceDir\ProgramFiles\USBIPSettingsLang.ini" />
+    <Content Include="SourceDir\ProgramFiles\x64\NUPortAdmin.exe" />
+    <Content Include="SourceDir\ProgramFiles\x64\QuickConfigDlg.exe" />
+    <Content Include="SourceDir\ProgramFiles\x64\TftpServer.exe" />
+    <Content Include="SourceDir\ProgramFiles\x64\UsbIpSettings.dll" />
+    <Content Include="SourceDir\ProgramFiles\x86\NUPortAdmin.exe" />
+    <Content Include="SourceDir\ProgramFiles\x86\QuickConfigDlg.exe" />
+    <Content Include="SourceDir\ProgramFiles\x86\TftpServer.exe" />
+    <Content Include="SourceDir\ProgramFiles\x86\UsbIpSettings.dll" />
     <Content Include="USBServerHelp.wxi" />
     <Content Include="WixUI_MondoWithoutLicenseDlg.wxi" />
   </ItemGroup>
