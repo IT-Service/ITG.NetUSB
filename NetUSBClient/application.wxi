@@ -49,6 +49,7 @@
 		<ComponentGroup Id="ApplicationComponents">
 			<ComponentRef	Id="$(var.AppInternalName)" Primary="yes"/>
 			<ComponentRef Id="$(var.AppInternalName).AppReg"/>
+			<ComponentRef Id="UsbIpSettings.dll"/>
 		</ComponentGroup>
 
 		<Icon Id="$(var.AppIcon)" SourceFile=".\Icons\Product.ico"/>
@@ -134,22 +135,6 @@
 					On="uninstall"
 				/>
 				<?endforeach?>
-				<?ifdef AppShortName?>
-				<?undef AppShortName?>
-				<?endif?>
-				<?define AppShortName="$(var.ProductShortName)"?>
-				<?ifdef AppInternalName?>
-				<?undef AppInternalName?>
-				<?endif?>
-				<?define AppInternalName="$(var.ProductInternalName)"?>
-				<?ifdef AppDirectory?>
-				<?undef AppDirectory?>
-				<?endif?>
-				<?define AppDirectory="APPLICATIONFOLDER"?>
-				<?ifdef AppDescription?>
-				<?undef AppDescription?>
-				<?endif?>
-				<?define AppDescription="$(var.ProductDescription)"?>
 				<ServiceInstall
 					Name="$(var.AppServiceName)"
 					DisplayName="$(var.AppInternalName)"
@@ -237,6 +222,18 @@
 					<RegistryValue Name="NUPortFolderPath" Type="string" Value="[$(var.AppDirectory)]"/>
 					<RegistryValue Name="EndTaskAppFlag" Type="integer" Value="0"/>
 				</RegistryKey>
+			</Component>
+
+			<Component
+				Id="UsbIpSettings.dll"
+				Guid="{57A511AA-73D4-4C89-BF10-DFE3E4639138}"
+				Location="local"
+			>
+				<File
+					Name="UsbIpSettings.dll"
+					KeyPath="yes"
+					Vital="yes"
+				/>
 			</Component>
 
 			<Directory Id="UsbIpLang1" Name="UsbIpLang">
