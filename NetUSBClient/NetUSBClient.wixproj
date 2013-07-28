@@ -39,10 +39,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="application.wxi" />
-    <Content Include="Common.RemoveAutoFile.wxi" />
     <Content Include="Icons\help.ico" />
     <Content Include="Icons\Product.ico" />
     <Content Include="sign.bat" />
+    <Content Include="SourceDir\ProgramFiles\NUPortAdmin.exe" />
+    <Content Include="SourceDir\ProgramFiles\NUPortCustom.ini" />
+    <Content Include="SourceDir\ProgramFiles\QuickConfigDlg.exe" />
+    <Content Include="SourceDir\ProgramFiles\TftpServer.exe" />
+    <Content Include="SourceDir\ProgramFiles\USB-ServerHelp.chm" />
+    <Content Include="SourceDir\ProgramFiles\UsbIpSettings.dll" />
+    <Content Include="USBServerHelp.wxi" />
     <Content Include="WixUI_MondoWithoutLicenseDlg.wxi" />
   </ItemGroup>
   <ItemGroup>

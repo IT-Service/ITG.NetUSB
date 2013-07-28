@@ -99,6 +99,7 @@
 			Description="$(var.ProductName)"
 		>
 			<FeatureRef Id="Application" />
+			<FeatureRef Id="ApplicationHelp" />
 		</Feature>
 
 		<Property Id="ARPREADME" Value="https://github.com/IT-Service/ITG.$(var.ProductInternalName)/blob/master/readme.md"/>
@@ -142,7 +143,7 @@
 					<Directory Id="ProductProgramFolder" Name="$(var.ProductInternalName)">
 						<Directory Id="ProductVersionProgramFolder" Name="$(var.ProductMajorVersion).$(var.ProductMinorVersion)">
 							<Directory Id="APPLICATIONFOLDER"
-								ComponentGuidGenerationSeed="{ECA0BFDB-6CA3-419E-9B70-D023198CE476}"
+								ComponentGuidGenerationSeed="{0D636237-2CDF-4E15-94D2-481386D3E02F}"
 							>
 							</Directory>
 						</Directory>
@@ -224,7 +225,7 @@
 	</Product>
 
 	<?include application.wxi ?>
-
+	<?include USBServerHelp.wxi ?>
 	<?include WixUI_MondoWithoutLicenseDlg.wxi?>
 
 </Wix>

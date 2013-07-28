@@ -3,4 +3,6 @@
 	<String Id="PackageDescription">Установочный пакет продукта</String>
 	<String Id="NewProductVersionExists">Более новая версия продукта [ProductName] уже установлена.</String>
 	<String Id="LaunchAfterInstall">Запустить установленный продукт сейчас</String>
+
+	<String Id="Help">Справка</String>
 </WixLocalization>
