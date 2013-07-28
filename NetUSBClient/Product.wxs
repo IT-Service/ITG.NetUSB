@@ -145,11 +145,6 @@
 							<Directory Id="APPLICATIONFOLDER"
 								ComponentGuidGenerationSeed="{0D636237-2CDF-4E15-94D2-481386D3E02F}"
 							>
-								<Directory Id="UsbIpLang1" Name="UsbIpLang">
-									<Directory Id="UsbIpLang2" Name="UsbIpLang">
-										<Directory Id="UsbIpLang" Name="UsbIpLang"/>
-									</Directory>
-								</Directory>
 							</Directory>
 						</Directory>
 					</Directory>

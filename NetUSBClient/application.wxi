@@ -123,6 +123,13 @@
 					<RegistryValue Name="Hidden" Type="integer" Value="1" />
 				</RegistryKey>
 			</Component>
+
+			<Directory Id="UsbIpLang1" Name="UsbIpLang">
+				<Directory Id="UsbIpLang2" Name="UsbIpLang">
+					<Directory Id="UsbIpLang" Name="UsbIpLang"/>
+				</Directory>
+			</Directory>
+
 		</DirectoryRef>
 
 	</Fragment>
