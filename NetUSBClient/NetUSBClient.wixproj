@@ -81,24 +81,25 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Common.1049.wxl" />
+    <EmbeddedResource Include="Product.1049.wxl" />
   </ItemGroup>
-	<ItemGroup>
-		<WixExtension Include="WixUIExtension">
+  <ItemGroup>
+    <WixExtension Include="WixUIExtension">
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
-		<WixExtension Include="WixDifxAppExtension">
-			<HintPath>$(WixExtDir)\WixDifxAppExtension.dll</HintPath>
-			<Name>WixDifxAppExtension</Name>
-		</WixExtension>
-	</ItemGroup>
-	<ItemGroup>
-		<WixLibrary Include="difxapp">
-			<HintPath>$(WixExtDir)\difxapp_$(Platform).wixlib</HintPath>
-			<Name>difxapp</Name>
-		</WixLibrary>
-	</ItemGroup>
-	<Import Project="$(WixTargetsPath)" />
+    <WixExtension Include="WixDifxAppExtension">
+      <HintPath>$(WixExtDir)\WixDifxAppExtension.dll</HintPath>
+      <Name>WixDifxAppExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <WixLibrary Include="difxapp">
+      <HintPath>$(WixExtDir)\difxapp_$(Platform).wixlib</HintPath>
+      <Name>difxapp</Name>
+    </WixLibrary>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
   <PropertyGroup>
     <PostBuildEvent>$(ProjectDir)sign.bat "!(TargetPath)"</PostBuildEvent>
   </PropertyGroup>

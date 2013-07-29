@@ -7,13 +7,13 @@
 	<?define ProductVersion="01.00.0054.0100"?>
 	<?define ProductMajorVersion="1"?>
 	<?define ProductMinorVersion="0"?>
-	<?define ProductShortName="USBIP"?>
+	<?define ProductShortName="!(loc.ProductShortName)"?>
 	<?define ProductInternalName="UsbIp"?>
-	<?define ProductDescription="Клиентское ПО для подкючения USB устройств через ip сети с использованием NetUSB-400i"?>
+	<?define ProductDescription="!(loc.ProductDescription)"?>
 	<?define ProductName="$(var.ProductShortName) v$(var.ProductVersion)"?>
 	<?define ProductCode="{DC949B5B-EA12-46B7-B81E-17B77AEAE93C}"?>
 	<?define UpgradeCode="{FBFFB0C4-74AC-42B5-A530-2FAACA7DCF4C}"?>
-	<?define Manufacturer="VScom"?>
+	<?define Manufacturer="!(loc.Manufacturer)"?>
 	<?define ManufacturerId="VScom"?>
 	
 	<?define ProductId="$(var.ManufacturerId).$(var.ProductInternalName).$(var.ProductMajorVersion).$(var.ProductMinorVersion)"?>
