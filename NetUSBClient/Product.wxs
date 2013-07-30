@@ -2,6 +2,7 @@
 <Wix
 	xmlns="http://wixtoolset.org/schemas/v4/wxs"
 	xmlns:difx="http://wixtoolset.org/schemas/v4/wxs/difxapp"
+	xmlns:fire="http://wixtoolset.org/schemas/v4/wxs/firewall"
 >
 
 	<?define ProductVersion="01.00.0054.0100"?>

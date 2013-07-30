@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include
 	xmlns="http://wixtoolset.org/schemas/v4/wxs"
+	xmlns:fire="http://wixtoolset.org/schemas/v4/wxs/firewall"
 >
 	<Fragment>
 
@@ -127,6 +128,35 @@
 						<!--<ShortcutProperty Key="System.AppUserModel.ID" Value="$(var.AppProgId)"/>-->
 					</Shortcut>
 					<?endforeach?>
+					<!-- конфигурируем правила файрвола для входящего трафика -->
+					<?foreach Tool in SAU;QC?>
+					<fire:FirewallException
+						Id="$(var.AppInternalName).$(var.Tool).Broadcast"
+						Name="!(loc.FirewallExceptionName$(var.Tool)Broadcast)"
+						Description="!(loc.FirewallExceptionDescription$(var.Tool)Broadcast)"
+						Protocol="udp"
+						Port="[DEFAULT_BROADCAST_PORTNO]"
+						Scope="localSubnet"
+						Profile="domain"
+						IgnoreFailure="yes"
+					/>
+					<?endforeach?>
+					<fire:FirewallException
+						Id="$(var.AppInternalName).SAU.DeviceRequest"
+						Name="!(loc.FirewallExceptionNameSAUDeviceRequest)"
+						Description="!(loc.FirewallExceptionDescriptionSAUDeviceRequest)"
+						Protocol="tcp"
+						Port="[DEVICE_REQUEST_PORTNO]"
+						Scope="localSubnet"
+						Profile="domain"
+						IgnoreFailure="yes"
+					/>
+					<!-- к сожалению, для исходящего трафика на сегодня нет возможности сконфигурировать правила в msi -->
+					<!--
+						CONFIGINTF_PORT
+						UDPSERVER_PORT
+						USBIP_TCPPORTNO
+					-->
 				</File>
 				<?foreach ShFolder in $(var.ShFolders)?>
 				<RemoveFolder

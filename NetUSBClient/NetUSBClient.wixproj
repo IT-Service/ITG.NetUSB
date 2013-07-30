@@ -36,6 +36,7 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="FirewallExtension" />
     <Folder Include="SourceDir" />
     <Folder Include="Icons" />
     <Folder Include="SourceDir\Drv" />
@@ -80,8 +81,9 @@
     <Content Include="WixUI_MondoWithoutLicenseDlg.wxi" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Common.1049.wxl" />
-    <EmbeddedResource Include="Product.1049.wxl" />
+    <EmbeddedResource Include="Common.ru-ru.wxl" />
+    <EmbeddedResource Include="FirewallExtension\ru-ru.wxl" />
+    <EmbeddedResource Include="Product.ru-ru.wxl" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixFirewallExtension">

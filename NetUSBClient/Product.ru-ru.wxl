@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization
+	xmlns="http://wixtoolset.org/schemas/v4/wxl"
+	Culture="ru-ru"
+>
+	<String Id="Manufacturer">VScom</String>
+	<String Id="ProductShortName">USBIP</String>
+	<String Id="ProductDescription">Клиентское ПО для подкючения USB устройств через ip сети с использованием NetUSB-400i</String>
+
+	<!-- не следует переводить, ПО проверяет наличие правила именно с указанным ниже именем -->
+	<String Id="FirewallExceptionNameSAUBroadcast">USB Server Admin Utility</String>
+	<String Id="FirewallExceptionDescriptionSAUBroadcast">Разрешение приёма приложению USPIP широковещательных пакетов от серверов USB с целью их обнаружения.</String>
+	<!-- не следует переводить, ПО проверяет наличие правила именно с указанным ниже именем -->
+	<String Id="FirewallExceptionNameQCBroadcast">USB Server Quick Config</String>
+	<String Id="FirewallExceptionDescriptionQCBroadcast">Разрешение приёма приложению USPIP широковещательных пакетов от серверов USB с целью их обнаружения.</String>
+	<!-- не следует переводить, ПО проверяет наличие правила именно с указанным ниже именем -->
+	<String Id="FirewallExceptionNameSAUDeviceRequest">USB Server Admin Utility</String>
+	<String Id="FirewallExceptionDescriptionSAUDeviceRequest">Разрешение приёма приложению USPIP запросов на освобождение устройства от других пользователей.</String>
+</WixLocalization>
