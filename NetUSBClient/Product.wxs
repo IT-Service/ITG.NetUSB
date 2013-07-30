@@ -76,7 +76,7 @@
 			AllowSameVersionUpgrades="yes"
 			RemoveFeatures=" "
 			MigrateFeatures="yes"
-			Schedule="afterInstallExecute"
+			Schedule="afterInstallValidate"
 		/>
 		
 		<!-- если находим оригинальный msi пакет (от производителя) - его удаляем -->

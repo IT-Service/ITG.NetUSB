@@ -8,6 +8,9 @@
 	<String Id="ProductDescription">Клиентское ПО для подкючения USB устройств через ip сети с использованием NetUSB-400i</String>
 	<String Id="ProductTitle">USB over IP - консоль администратора</String>
 
+	<String Id="Drivers">Драйверы</String>
+	<String Id="DriversDescription">Драйверы для подкючения USB устройств через ip сети с использованием NetUSB-400i</String>
+
 	<!-- не следует переводить, ПО проверяет наличие правила именно с указанным ниже именем -->
 	<String Id="FirewallExceptionNameSAUBroadcast">USB Server Admin Utility</String>
 	<String Id="FirewallExceptionDescriptionSAUBroadcast">Разрешение приёма приложению USPIP широковещательных пакетов от серверов USB с целью их обнаружения.</String>
