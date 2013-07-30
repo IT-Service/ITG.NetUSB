@@ -186,6 +186,13 @@
 					Stop="both"
 					Wait="yes"
 				/>
+				<RegistryKey
+					Root="HKLM"
+					Key="$(var.AppRegKey)"
+				>
+					<RegistryValue Name="AddedToFirewall" Type="integer" Value="1"/>
+					<RegistryValue Name="NUPortFolderPath" Type="string" Value="[$(var.AppDirectory)]"/>
+				</RegistryKey>
 			</Component>
 
 			<Component
@@ -282,7 +289,6 @@
 						<RegistryValue Name="GenNetworkThrottle" Type="integer" Value="[DEFAULT_GENERAL_NETWORK_THROTTLE]"/>
 						<RegistryValue Name="BroadcastPortNumber" Type="integer" Value="[DEFAULT_BROADCAST_PORTNO]"/>
 					</RegistryKey>
-					<RegistryValue Name="NUPortFolderPath" Type="string" Value="[$(var.AppDirectory)]"/>
 					<RegistryValue Name="EndTaskAppFlag" Type="integer" Value="0"/>
 				</RegistryKey>
 			</Component>
