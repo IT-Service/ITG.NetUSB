@@ -50,6 +50,7 @@
 
 		<ComponentGroup Id="ApplicationComponents">
 			<ComponentRef	Id="$(var.AppInternalName)" Primary="yes"/>
+			<ComponentRef Id="$(var.AppInternalName).Service"/>
 			<ComponentRef Id="$(var.AppInternalName).AppReg"/>
 			<ComponentRef Id="$(var.AppIni)"/>
 			<ComponentRef Id="QuickConfigDlg.exe"/>
@@ -179,12 +180,32 @@
 					On="uninstall"
 				/>
 				<?endforeach?>
+				<ServiceControl
+					Id="$(var.AppServiceName).InstallFiles"
+					Name="$(var.AppServiceName)"
+					Stop="both"
+					Wait="yes"
+				/>
+			</Component>
+
+			<Component
+				Id="$(var.AppInternalName).Service"
+				Guid="{EEB4A513-9309-418A-B5ED-F91F0D142CE5}"
+				Location="local"
+			>
+				<Condition>DEFAULT_BOOTSTART</Condition>
+				<RegistryKey
+					Root="HKLM"
+					Key="$(var.AppRegKey)"
+				>
+					<RegistryValue Name="StartService" Type="integer" Value="[DEFAULT_BOOTSTART]" KeyPath="yes"/>
+				</RegistryKey>
 				<ServiceInstall
 					Name="$(var.AppServiceName)"
 					DisplayName="$(var.AppInternalName)"
 					Description="$(var.AppDescription)"
 					Type="ownProcess"
-					Arguments="/mode=Service"
+					Arguments="&quot;[#$(var.AppFileName)]&quot; /mode=Service"
 					ErrorControl="normal"
 					Interactive="no"
 					Start="auto"
@@ -203,10 +224,9 @@
 					</ServiceConfigFailureActions>
 				</ServiceInstall>
 				<ServiceControl
-					Id="$(var.AppServiceName)"
+					Id="$(var.AppServiceName).InstallService"
 					Name="$(var.AppServiceName)"
 					Start="install"
-					Stop="both"
 					Wait="yes"
 				/>
 			</Component>
@@ -243,7 +263,7 @@
 				</RegistryKey>
 				<RegistryKey
 					Root="HKMU"
-					Key="$(var.AppRegKey)\Capabilities"
+					Key="$(var.AppRegKey)"
 				>
 					<RegistryKey Key="Capabilities">
 						<RegistryValue Name="ApplicationName" Type="string" Value="$(var.AppShortName)" KeyPath="yes" />
@@ -259,7 +279,6 @@
 						<RegistryValue Name="AppAutoLaunch" Type="integer" Value="[DEFAULT_START_AUTOLAUNCH]"/>
 						<RegistryValue Name="AppStartMinimized" Type="integer" Value="[DEFAULT_SHOW_WIN_MINIMIZED]"/>
 						<RegistryValue Name="AppAutoStartDevmap" Type="integer" Value="[DEFAULT_START_DEV_MAP]"/>
-						<RegistryValue Name="StartService" Type="integer" Value="[DEFAULT_BOOTSTART]"/>
 						<RegistryValue Name="GenNetworkThrottle" Type="integer" Value="[DEFAULT_GENERAL_NETWORK_THROTTLE]"/>
 						<RegistryValue Name="BroadcastPortNumber" Type="integer" Value="[DEFAULT_BROADCAST_PORTNO]"/>
 					</RegistryKey>
