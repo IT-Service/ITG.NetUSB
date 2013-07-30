@@ -6,6 +6,7 @@
 	<String Id="Manufacturer">VScom</String>
 	<String Id="ProductShortName">USBIP</String>
 	<String Id="ProductDescription">Клиентское ПО для подкючения USB устройств через ip сети с использованием NetUSB-400i</String>
+	<String Id="ProductTitle">USB over IP - консоль администратора</String>
 
 	<!-- не следует переводить, ПО проверяет наличие правила именно с указанным ниже именем -->
 	<String Id="FirewallExceptionNameSAUBroadcast">USB Server Admin Utility</String>
