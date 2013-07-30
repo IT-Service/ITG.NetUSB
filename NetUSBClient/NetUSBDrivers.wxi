@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include
-	xmlns="http://schemas.microsoft.com/wix/2006/wi"
-	xmlns:difx="http://schemas.microsoft.com/wix/DifxAppExtension"
+	xmlns="http://wixtoolset.org/schemas/v4/wxs"
+	xmlns:difx="http://wixtoolset.org/schemas/v4/wxs/difxapp"
 >
 	<Fragment>
 

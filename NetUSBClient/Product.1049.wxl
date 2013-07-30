@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WixLocalization Culture="ru-ru" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+<WixLocalization
+	xmlns="http://wixtoolset.org/schemas/v4/wxl"
+	Culture="ru-ru"
+>
+	<String Id="Manufacturer">VScom</String>
 	<String Id="ProductShortName">USBIP</String>
 	<String Id="ProductDescription">Клиентское ПО для подкючения USB устройств через ip сети с использованием NetUSB-400i</String>
-	<String Id="Manufacturer">VScom</String>
 </WixLocalization>
