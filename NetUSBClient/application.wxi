@@ -49,6 +49,7 @@
 		<ComponentGroup Id="ApplicationComponents">
 			<ComponentRef	Id="$(var.AppInternalName)" Primary="yes"/>
 			<ComponentRef Id="$(var.AppInternalName).AppReg"/>
+			<ComponentRef Id="QuickConfigDlg.exe"/>
 			<ComponentRef Id="UsbIpSettings.dll"/>
 			<ComponentRef Id="TftpServer.exe"/>
 		</ComponentGroup>
@@ -252,6 +253,18 @@
 					<RegistryValue Name="NUPortFolderPath" Type="string" Value="[$(var.AppDirectory)]"/>
 					<RegistryValue Name="EndTaskAppFlag" Type="integer" Value="0"/>
 				</RegistryKey>
+			</Component>
+
+			<Component
+				Id="QuickConfigDlg.exe"
+				Guid="{31550F98-BC70-4B6F-810C-BF7F3210FF22}"
+				Location="local"
+			>
+				<File
+					Name="QuickConfigDlg.exe"
+					KeyPath="yes"
+					Vital="no"
+				/>
 			</Component>
 
 			<Component
