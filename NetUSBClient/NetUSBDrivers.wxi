@@ -11,7 +11,7 @@
 			Absent="disallow"
 			Display="collapse"
 			AllowAdvertise="no"
-			InstallDefault="source"
+			InstallDefault="local"
 			TypicalDefault="install"
 			Title="!(loc.Drivers)"
 			Description="!(loc.DriversDescription)."
@@ -40,7 +40,7 @@
 					<Component
 						Id="usbipbus.inf"
 						Guid="{F7833C49-88E4-41AA-B9A3-81BC176459AD}"
-						Location="source"
+						Location="local"
 					>
 						<RegistryKey
 							Root="HKLM"
@@ -63,10 +63,9 @@
 						<?endforeach?>
 						<difx:Driver
 							AddRemovePrograms="no"
-							ForceInstall="yes"
 							PlugAndPlayPrompt="no"
 							Legacy="no"
-							DeleteFiles="no"
+							DeleteFiles="yes"
 						/>
 					</Component>
 				</Directory>
@@ -79,7 +78,7 @@
 					<Component
 						Id="vbusenum.inf"
 						Guid="{4FBEA5FF-ED5A-453C-A750-3C2B34DD23EA}"
-						Location="source"
+						Location="local"
 					>
 						<RegistryKey
 							Root="HKLM"
@@ -101,10 +100,9 @@
 						<?endforeach?>
 						<difx:Driver
 							AddRemovePrograms="no"
-							ForceInstall="yes"
 							PlugAndPlayPrompt="no"
 							Legacy="no"
-							DeleteFiles="no"
+							DeleteFiles="yes"
 						/>
 					</Component>
 				</Directory>
