@@ -64,6 +64,7 @@
     <Content Include="SourceDir\Drv\x64\vbusenum.inf" />
     <Content Include="SourceDir\Drv\x64\vbusenum.sys" />
     <Content Include="SourceDir\Drv\x64\[itg] update.cmd" />
+    <Content Include="SourceDir\Drv\x86\[itg] update.cmd" />
     <Content Include="SourceDir\ProgramFiles\NUPortCustom.ini" />
     <Content Include="SourceDir\ProgramFiles\QuickConfigLang.ini" />
     <Content Include="SourceDir\ProgramFiles\USB-ServerHelp.chm" />
