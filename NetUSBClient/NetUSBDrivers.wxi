@@ -143,18 +143,18 @@
 			Id="AddDevice.SetParam"
 			Return="check"
 			Property="AddDevice"
-			Value='"[#vbusenum.inf]" root\vbusenum'
+			Value='System root\vbusenum'
 		/>
 		<CustomAction
 			Id="RemoveDevice.SetParam"
 			Return="check"
-			Property="DelDevice"
+			Property="RemoveDevice"
 			Value="root\vbusenum"
 		/>
 		<CustomAction
 			Id="RemoveDeviceServices.SetParam"
 			Return="check"
-			Property="DelService"
+			Property="RemoveDeviceServices"
 			Value="vbusenum"
 		/>
 
@@ -179,7 +179,7 @@
 			</Custom>
 			<Custom
 				Action="RemoveDeviceServices"
-				Before="MsiProcessDrivers"
+				Before="RemoveFiles"
 			>
 				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3)]]>
 			</Custom>
