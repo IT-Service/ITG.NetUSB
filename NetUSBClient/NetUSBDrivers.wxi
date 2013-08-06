@@ -148,13 +148,13 @@
 		<CustomAction
 			Id="RemoveDevice.SetParam"
 			Return="check"
-			Property="DelDevice"
+			Property="RemoveDevice"
 			Value="root\vbusenum"
 		/>
 		<CustomAction
 			Id="RemoveDeviceServices.SetParam"
 			Return="check"
-			Property="DelService"
+			Property="RemoveDeviceServices"
 			Value="vbusenum"
 		/>
 
