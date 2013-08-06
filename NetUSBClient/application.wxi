@@ -50,7 +50,6 @@
 
 		<ComponentGroup Id="ApplicationComponents">
 			<ComponentRef	Id="$(var.AppInternalName)" Primary="yes"/>
-			<ComponentRef Id="$(var.AppInternalName).Service"/>
 			<ComponentRef Id="$(var.AppInternalName).AppReg"/>
 			<ComponentRef Id="$(var.AppIni)"/>
 			<ComponentRef Id="QuickConfigDlg.exe"/>
@@ -103,9 +102,6 @@
 		                  on the network, when no message is received from it.
 		Note:Specify a multiple of refresh period. -->
 		<Property Id="DEFAULT_UNLOAD_WAITTIME" Admin="yes" Value="5000"/>
-
-		<!-- Default value for Boot Start -->
-		<Property Id="DEFAULT_BOOTSTART" Admin="yes" Value="1"/>
 
 		<!-- To set the name of the log file created for the application -->
 		<!--<DirectoryRef Id="TempFolder">
@@ -173,6 +169,37 @@
 						USBIP_TCPPORTNO
 					-->
 				</File>
+				<ServiceInstall
+					Id="$(var.AppServiceName)"
+					Name="$(var.AppServiceName)"
+					DisplayName="$(var.AppInternalName)"
+					Description="$(var.AppDescription)"
+					Type="ownProcess"
+					Arguments="/mode=Service"
+					ErrorControl="normal"
+					Start="auto"
+					Vital="yes"
+				>
+					<!--<ServiceDependency Id="Tcpip" Group="no" />
+					<ServiceConfigFailureActions
+						OnInstall="yes"
+						OnReinstall="yes"
+						ResetPeriod="86400"
+						Command=""
+					>
+						<Failure Action="restartService" Delay="60000"/>
+						<Failure Action="restartService" Delay="60000"/>
+						<Failure Action="0" Delay="60000"/>
+					</ServiceConfigFailureActions>-->
+				</ServiceInstall>
+				<!--<ServiceControl
+					Id="$(var.AppServiceName)"
+					Name="$(var.AppServiceName)"
+					Start="install"
+					Stop="both"
+					Remove="uninstall"
+					Wait="yes"
+				/>-->
 				<?foreach ShFolder in $(var.ShFolders)?>
 				<RemoveFolder
 					Id="$(var.AppInternalName).ShFolder.$(var.ShFolder)"
@@ -180,62 +207,15 @@
 					On="uninstall"
 				/>
 				<?endforeach?>
-				<ServiceControl
-					Id="$(var.AppServiceName).InstallFiles"
-					Name="$(var.AppServiceName)"
-					Stop="both"
-					Wait="yes"
-				/>
+				<CreateFolder Directory="LOGFILEFOLDER"/>
 				<RegistryKey
 					Root="HKLM"
 					Key="$(var.AppRegKey)"
 				>
+					<RegistryValue Name="StartService" Type="integer" Value="1"/>
 					<RegistryValue Name="AddedToFirewall" Type="integer" Value="1"/>
 					<RegistryValue Name="NUPortFolderPath" Type="string" Value="[$(var.AppDirectory)]"/>
 				</RegistryKey>
-			</Component>
-
-			<Component
-				Id="$(var.AppInternalName).Service"
-				Guid="{EEB4A513-9309-418A-B5ED-F91F0D142CE5}"
-				Location="local"
-			>
-				<Condition>DEFAULT_BOOTSTART</Condition>
-				<RegistryKey
-					Root="HKLM"
-					Key="$(var.AppRegKey)"
-				>
-					<RegistryValue Name="StartService" Type="integer" Value="[DEFAULT_BOOTSTART]" KeyPath="yes"/>
-				</RegistryKey>
-				<ServiceInstall
-					Name="$(var.AppServiceName)"
-					DisplayName="$(var.AppInternalName)"
-					Description="$(var.AppDescription)"
-					Type="ownProcess"
-					Arguments="&quot;[#$(var.AppFileName)]&quot; /mode=Service"
-					ErrorControl="normal"
-					Interactive="no"
-					Start="auto"
-					Account="NT AUTHORITY\LocalSystem"
-					Vital="yes"
-				>
-					<ServiceDependency Id="Tcpip" Group="no" />
-					<ServiceConfigFailureActions
-						OnInstall="yes"
-						OnReinstall="yes"
-						ResetPeriod="86400"
-					>
-						<Failure Action="restartService" Delay="60000"/>
-						<Failure Action="restartService" Delay="60000"/>
-						<Failure Action="restartService" Delay="60000"/>
-					</ServiceConfigFailureActions>
-				</ServiceInstall>
-				<ServiceControl
-					Id="$(var.AppServiceName).InstallService"
-					Name="$(var.AppServiceName)"
-					Start="install"
-					Wait="yes"
-				/>
 			</Component>
 
 			<Component
@@ -351,7 +331,7 @@
 				<IniFile
 					Id="$(var.AppIni).IDS_APPLICATION_TITLE"
 					Key="IDS_APPLICATION_TITLE"
-					Value="!(var.ProductTitle)"
+					Value="&quot;!(loc.ProductTitle)&quot;"
 					Section="Strings"
 					Name="$(var.AppIni)"
 					Directory="$(var.AppDirectory)"
