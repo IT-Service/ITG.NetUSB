@@ -3,3 +3,6 @@ obj
 /_UpgradeReport_Files
 /UpgradeLog*.htm
 /UpgradeLog*.XML
+DevMsi.exp
+DevMsi.lib
+DevMsi.pdb
