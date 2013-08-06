@@ -65,7 +65,7 @@
 							AddRemovePrograms="no"
 							PlugAndPlayPrompt="no"
 							Legacy="no"
-							DeleteFiles="yes"
+							DeleteFiles="no"
 						/>
 					</Component>
 				</Directory>
@@ -102,13 +102,101 @@
 							AddRemovePrograms="no"
 							PlugAndPlayPrompt="no"
 							Legacy="no"
-							DeleteFiles="yes"
+							DeleteFiles="no"
 						/>
 					</Component>
 				</Directory>
 
 			</Directory>
 		</DirectoryRef>
+
+		<Binary
+			Id="DevMsi"
+			SourceFile=".\..\DevMsi\bin\Release\$(sys.BUILDARCH)\DevMsi.dll"
+		/>
+		<CustomAction
+			Id="AddDevice"
+			BinaryKey="DevMsi"
+			DllEntry="CreateDevnode"
+			Return="check"
+			Execute="deferred"
+			Impersonate="no"
+		/>
+		<CustomAction
+			Id="RemoveDevice"
+			BinaryKey="DevMsi"
+			DllEntry="RemoveDevnode"
+			Return="ignore"
+			Execute="deferred"
+			Impersonate="no"
+		/>
+		<CustomAction
+			Id="RemoveDeviceServices"
+			Return="ignore"
+			BinaryKey="DevMsi"
+			DllEntry="RemoveService"
+			Execute="deferred"
+			Impersonate="no"
+		/>
+
+		<CustomAction
+			Id="AddDevice.SetParam"
+			Return="check"
+			Property="AddDevice"
+			Value='"[#vbusenum.inf]" root\vbusenum'
+		/>
+		<CustomAction
+			Id="RemoveDevice.SetParam"
+			Return="check"
+			Property="DelDevice"
+			Value="root\vbusenum"
+		/>
+		<CustomAction
+			Id="RemoveDeviceServices.SetParam"
+			Return="check"
+			Property="DelService"
+			Value="vbusenum"
+		/>
+
+		<InstallExecuteSequence>
+			<Custom
+				Action="RemoveDevice.SetParam"
+				Before="RemoveDevice"
+			>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3)]]>
+			</Custom>
+			<Custom
+				Action="RemoveDevice"
+				Before="RemoveDeviceServices"
+			>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3)]]>
+			</Custom>
+			<Custom
+				Action="RemoveDeviceServices.SetParam"
+				Before="RemoveDeviceServices"
+			>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3)]]>
+			</Custom>
+			<Custom
+				Action="RemoveDeviceServices"
+				Before="MsiProcessDrivers"
+			>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3)]]>
+			</Custom>
+
+			<Custom
+				Action="AddDevice.SetParam"
+				Before="AddDevice"
+			>
+				<![CDATA[(VersionNT > 400) AND ($vbusenum.inf = 3)]]>
+			</Custom>
+			<Custom
+				Action="AddDevice"
+				After="MsiProcessDrivers"
+			>
+				<![CDATA[(VersionNT > 400) AND ($vbusenum.inf = 3)]]>
+			</Custom>
+		</InstallExecuteSequence>
 
 	</Fragment>
 </Include>
