@@ -11,6 +11,10 @@
 		<?define AppInternalName="$(var.ProductInternalName)"?>
 		<?ifdef AppServiceName?><?undef AppServiceName?><?endif?>
 		<?define AppServiceName="$(var.ProductInternalName)Service"?>
+		<?ifdef AppServiceDisplayName?><?undef AppServiceDisplayName?><?endif?>
+		<?define AppServiceDisplayName="!(loc.AppServiceDisplayName)"?>
+		<?ifdef AppServiceDescription?><?undef AppServiceDescription?><?endif?>
+		<?define AppServiceDescription="!(loc.AppServiceDescription)"?>
 		<?ifdef AppDirectory?><?undef AppDirectory?><?endif?>
 		<?define AppDirectory="APPLICATIONFOLDER"?>
 		<?ifdef AppDescription?><?undef AppDescription?><?endif?>
@@ -172,8 +176,8 @@
 				<ServiceInstall
 					Id="$(var.AppServiceName)"
 					Name="$(var.AppServiceName)"
-					DisplayName="$(var.AppInternalName)"
-					Description="$(var.AppDescription)"
+					DisplayName="$(var.AppServiceDisplayName)"
+					Description="$(var.AppServiceDescription)"
 					Type="ownProcess"
 					Arguments="/mode=Service"
 					ErrorControl="normal"
