@@ -180,8 +180,8 @@
 					Start="auto"
 					Vital="yes"
 				>
-					<!--<ServiceDependency Id="Tcpip" Group="no" />
-					<ServiceConfigFailureActions
+					<ServiceDependency Id="Tcpip" Group="no" />
+					<!--<ServiceConfigFailureActions
 						OnInstall="yes"
 						OnReinstall="yes"
 						ResetPeriod="86400"
@@ -192,14 +192,13 @@
 						<Failure Action="0" Delay="60000"/>
 					</ServiceConfigFailureActions>-->
 				</ServiceInstall>
-				<!--<ServiceControl
+				<ServiceControl
 					Id="$(var.AppServiceName)"
 					Name="$(var.AppServiceName)"
-					Start="install"
 					Stop="both"
 					Remove="uninstall"
 					Wait="yes"
-				/>-->
+				/>
 				<?foreach ShFolder in $(var.ShFolders)?>
 				<RemoveFolder
 					Id="$(var.AppInternalName).ShFolder.$(var.ShFolder)"
