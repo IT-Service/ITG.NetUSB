@@ -135,7 +135,7 @@
 		<!--<Property Id="MSIFASTINSTALL" Value="3"/>-->
 		<?endif?>
 
-		<Property Id="MSIRESTARTMANAGERCONTROL" Value="DisableShutdown"/>
+		<Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable"/>
 		
 		<MediaTemplate EmbedCab="$(var.Compressed)"/>
 

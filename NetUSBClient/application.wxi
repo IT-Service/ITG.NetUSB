@@ -63,9 +63,13 @@
 
 		<Icon Id="$(var.AppIcon)" SourceFile=".\Icons\Product.ico"/>
 
+		<!-- Start UsbIpService
+		Can Take Values as 1 - TRUE (start), or 0 - FALSE -->
+		<Property Id="DEFAULT_BOOTSTART" Admin="yes" Value="1"/>
+
 		<!-- To Set the Application level Default AutoConnect Value
 		Can Take Values as 1 - TRUE AutoConnect Enable, or 0 - FALSE, AutoConnect Disable -->
-		<Property Id="DEFAULT_AUTOCONECT_VALUE" Admin="yes" Value="0"/>
+		<Property Id="DEFAULT_AUTOCONECT_VALUE" Admin="yes" Value="1"/>
 
 		<!-- To Set the Application level Default AutoReConnect Value
 		Can Take Values as 1 - TRUE AutoReConnect Enable, or 0 - FALSE, AutoReConnect Disable -->
@@ -78,7 +82,7 @@
 		<Property Id="DEFAULT_START_AUTOLAUNCH" Admin="yes" Value="0"/>
 
 		<!-- Default value for Show Window of USB Server AdminUtility -->
-		<Property Id="DEFAULT_SHOW_WIN_MINIMIZED" Admin="yes" Value="1"/>
+		<Property Id="DEFAULT_SHOW_WIN_MINIMIZED" Admin="yes" Value="0"/>
 
 		<!-- Default value for auto start device mapping in USB Server AdminUtility -->
 		<Property Id="DEFAULT_START_DEV_MAP" Admin="yes" Value="1"/>
@@ -99,7 +103,7 @@
 		<Property Id="UDPSERVER_PORT" Admin="yes" Value="1341"/>
 
 		<!-- Default Value for Network Throttling -->
-		<Property Id="DEFAULT_GENERAL_NETWORK_THROTTLE" Admin="yes" Value="0"/>
+		<Property Id="DEFAULT_GENERAL_NETWORK_THROTTLE" Admin="yes" Value="1"/>
 
 		<!-- Default Value for 'Unload Wait Time' in milli second
 		Unload Wait Time: Amount of time to wait to assume the server is not present
@@ -200,6 +204,7 @@
 					Id="$(var.AppServiceName)"
 					Name="$(var.AppServiceName)"
 					Stop="both"
+					Start="install"
 					Remove="uninstall"
 					Wait="yes"
 				/>
@@ -215,7 +220,6 @@
 					Root="HKLM"
 					Key="$(var.AppRegKey)"
 				>
-					<RegistryValue Name="StartService" Type="integer" Value="1"/>
 					<RegistryValue Name="AddedToFirewall" Type="integer" Value="1"/>
 					<RegistryValue Name="NUPortFolderPath" Type="string" Value="[$(var.AppDirectory)]"/>
 				</RegistryKey>
@@ -261,6 +265,7 @@
 						<RegistryValue Name="Hidden" Type="integer" Value="1" />
 					</RegistryKey>
 					<RegistryKey Key="Parameters">
+						<RegistryValue Name="StartService" Type="integer" Value="[DEFAULT_BOOTSTART]"/>
 						<RegistryValue Name="AppTraceLevel" Type="integer" Value="3"/>
 						<RegistryValue Name="AppGuiRefreshPeriod" Type="integer" Value="[DEFAULT_UNLOAD_WAITTIME]"/>
 						<RegistryValue Name="AppStopDeviceMappingPeriod" Type="integer" Value="180000"/>
@@ -343,7 +348,7 @@
 				<IniFile
 					Id="$(var.AppIni).LOGFILE_NAME"
 					Key="LOGFILE_NAME"
-					Value="[LOGFILEFOLDER]USBIPAdmin.log"
+					Value='"[LOGFILEFOLDER]USBIPAdmin.log"'
 					Section="Strings"
 					Name="$(var.AppIni)"
 					Directory="$(var.AppDirectory)"
