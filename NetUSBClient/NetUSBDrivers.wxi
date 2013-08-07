@@ -163,38 +163,38 @@
 				Action="RemoveDevice.SetParam"
 				Before="RemoveDevice"
 			>
-				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3)]]>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
 			</Custom>
 			<Custom
 				Action="RemoveDevice"
 				Before="RemoveDeviceServices"
 			>
-				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3)]]>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
 			</Custom>
 			<Custom
 				Action="RemoveDeviceServices.SetParam"
 				Before="RemoveDeviceServices"
 			>
-				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3)]]>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
 			</Custom>
 			<Custom
 				Action="RemoveDeviceServices"
 				Before="RemoveFiles"
 			>
-				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3)]]>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
 			</Custom>
 
 			<Custom
 				Action="AddDevice.SetParam"
 				Before="AddDevice"
 			>
-				<![CDATA[(VersionNT > 400) AND ($vbusenum.inf = 3)]]>
+				<![CDATA[(VersionNT > 400) AND ($vbusenum.inf = 3) AND (?vbusenum.inf = 2)]]>
 			</Custom>
 			<Custom
 				Action="AddDevice"
 				After="MsiProcessDrivers"
 			>
-				<![CDATA[(VersionNT > 400) AND ($vbusenum.inf = 3)]]>
+				<![CDATA[(VersionNT > 400) AND ($vbusenum.inf = 3) AND (?vbusenum.inf = 2)]]>
 			</Custom>
 		</InstallExecuteSequence>
 
