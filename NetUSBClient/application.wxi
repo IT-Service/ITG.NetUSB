@@ -267,6 +267,7 @@
 					</RegistryKey>
 					<RegistryValue Name="EndTaskAppFlag" Type="integer" Value="0"/>
 				</RegistryKey>
+				<!-- http://www.sevenforums.com/tutorials/316-compatibility-mode.html -->
 				<RegistryKey
 					Root="HKLM"
 					Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"
