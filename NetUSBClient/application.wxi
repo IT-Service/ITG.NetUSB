@@ -28,8 +28,6 @@
 
 		<?ifdef AppRegKey?><?undef AppRegKey?><?endif?>
 		<?define AppRegKey="SOFTWARE\NUPort"?>
-		<?ifdef AppIni?><?undef AppIni?><?endif?>
-		<?define AppIni="NUPortCustom.ini"?>
 
 		<?ifdef AppProgId?><?undef AppProgId?><?endif?>
 		<?define AppProgId="$(var.ProductProgIdPrefix).$(var.ProductProgIdPostfix)"?>
@@ -54,7 +52,6 @@
 
 		<ComponentGroup Id="ApplicationComponents">
 			<ComponentRef	Id="$(var.AppInternalName)" Primary="yes"/>
-			<ComponentRef Id="$(var.AppIni)"/>
 			<ComponentRef Id="QuickConfigDlg.exe"/>
 			<ComponentRef Id="UsbIpSettings.dll"/>
 			<ComponentRef Id="TftpServer.exe"/>
@@ -267,6 +264,7 @@
 					</RegistryKey>
 					<RegistryValue Name="EndTaskAppFlag" Type="integer" Value="0"/>
 				</RegistryKey>
+				<!-- http://www.sevenforums.com/tutorials/316-compatibility-mode.html -->
 				<RegistryKey
 					Root="HKLM"
 					Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"
@@ -309,56 +307,6 @@
 					KeyPath="yes"
 					Vital="no"
 				/>
-			</Component>
-
-			<Directory Id="UsbIpLang1" Name="UsbIpLang">
-				<Directory Id="UsbIpLang2" Name="UsbIpLang">
-					<Directory Id="UsbIpLang" Name="UsbIpLang"/>
-				</Directory>
-			</Directory>
-
-		</DirectoryRef>
-
-		<DirectoryRef Id="$(var.AppDirectory)" FileSource=".\SourceDir\ProgramFiles">
-			<Component
-				Id="$(var.AppIni)"
-				Guid="{F9B55CDA-178B-487B-B22F-583FBDA754E7}"
-			>
-				<File
-					Id="$(var.AppIni)"
-					Name="$(var.AppIni)"
-					KeyPath="yes"
-					Vital="no"
-				/>
-				<IniFile
-					Id="$(var.AppIni).IDS_APPLICATION_TITLE"
-					Key="IDS_APPLICATION_TITLE"
-					Value="&quot;!(loc.ProductTitle)&quot;"
-					Section="Strings"
-					Name="$(var.AppIni)"
-					Directory="$(var.AppDirectory)"
-					Action="addLine"
-				/>
-				<IniFile
-					Id="$(var.AppIni).LOGFILE_NAME"
-					Key="LOGFILE_NAME"
-					Value='"[LOGFILEFOLDER]USBIPAdmin.log"'
-					Section="Strings"
-					Name="$(var.AppIni)"
-					Directory="$(var.AppDirectory)"
-					Action="addLine"
-				/>
-				<?foreach IniKey in DEFAULT_AUTOCONECT_VALUE;DEFAULT_AUTORECONECT_VALUE;AUTOLAUNCH_DELAY;DEFAULT_START_AUTOLAUNCH;DEFAULT_SHOW_WIN_MINIMIZED;DEFAULT_START_DEV_MAP;CONFIGINTF_PORT;DEFAULT_BROADCAST_PORTNO;USBIP_TCPPORTNO;DEVICE_REQUEST_PORTNO;UDPSERVER_PORT;DEFAULT_GENERAL_NETWORK_THROTTLE;DEFAULT_UNLOAD_WAITTIME;DEFAULT_BOOTSTART?>
-				<IniFile
-					Id="$(var.AppIni).$(var.IniKey)"
-					Key="$(var.IniKey)"
-					Value="[$(var.IniKey)]"
-					Section="AppSettings"
-					Name="$(var.AppIni)"
-					Directory="$(var.AppDirectory)"
-					Action="addLine"
-				/>
-				<?endforeach?>
 			</Component>
 		</DirectoryRef>
 

@@ -65,11 +65,7 @@
     <Content Include="SourceDir\Drv\x64\vbusenum.sys" />
     <Content Include="SourceDir\Drv\x64\[itg] update.cmd" />
     <Content Include="SourceDir\Drv\x86\[itg] update.cmd" />
-    <Content Include="SourceDir\ProgramFiles\NUPortCustom.ini" />
-    <Content Include="SourceDir\ProgramFiles\QuickConfigLang.ini" />
     <Content Include="SourceDir\ProgramFiles\USB-ServerHelp.chm" />
-    <Content Include="SourceDir\ProgramFiles\USBIPAdminLang.ini" />
-    <Content Include="SourceDir\ProgramFiles\USBIPSettingsLang.ini" />
     <Content Include="SourceDir\ProgramFiles\x64\NUPortAdmin.exe" />
     <Content Include="SourceDir\ProgramFiles\x64\QuickConfigDlg.exe" />
     <Content Include="SourceDir\ProgramFiles\x64\TftpServer.exe" />
