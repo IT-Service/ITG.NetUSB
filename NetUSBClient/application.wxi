@@ -54,7 +54,6 @@
 
 		<ComponentGroup Id="ApplicationComponents">
 			<ComponentRef	Id="$(var.AppInternalName)" Primary="yes"/>
-			<ComponentRef Id="$(var.AppInternalName).AppReg"/>
 			<ComponentRef Id="$(var.AppIni)"/>
 			<ComponentRef Id="QuickConfigDlg.exe"/>
 			<ComponentRef Id="UsbIpSettings.dll"/>
@@ -144,7 +143,6 @@
 						Icon="$(var.AppIcon)"
 						Advertise="yes"
 					>
-						<!--<ShortcutProperty Key="System.AppUserModel.ID" Value="$(var.AppProgId)"/>-->
 					</Shortcut>
 					<?endforeach?>
 					<!-- конфигурируем правила файрвола для входящего трафика -->
@@ -216,21 +214,9 @@
 				/>
 				<?endforeach?>
 				<CreateFolder Directory="LOGFILEFOLDER"/>
-				<RegistryKey
-					Root="HKLM"
-					Key="$(var.AppRegKey)"
-				>
-					<RegistryValue Name="AddedToFirewall" Type="integer" Value="1"/>
-					<RegistryValue Name="NUPortFolderPath" Type="string" Value="[$(var.AppDirectory)]"/>
-				</RegistryKey>
-			</Component>
-
-			<Component
-				Id="$(var.AppInternalName).AppReg"
-			>
 				<!-- http://msdn.microsoft.com/ru-RU/library/windows/desktop/ee872121(v=vs.85).aspx -->
 				<RegistryKey
-					Root="HKMU"
+					Root="HKLM"
 					Key="SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths"
 				>
 					<?foreach AppFileNameAlias in $(var.AppNameAliases)?>
@@ -250,17 +236,19 @@
 					</RegistryKey>
 				</RegistryKey>
 				<RegistryKey
-					Root="HKMU"
+					Root="HKLM"
 					Key="SOFTWARE\RegisteredApplications"
 				>
 					<RegistryValue Name="$(var.AppProgId)" Type="string" Value="$(var.AppRegKey)\Capabilities" />
 				</RegistryKey>
 				<RegistryKey
-					Root="HKMU"
+					Root="HKLM"
 					Key="$(var.AppRegKey)"
 				>
+					<RegistryValue Name="AddedToFirewall" Type="integer" Value="1"/>
+					<RegistryValue Name="NUPortFolderPath" Type="string" Value="[$(var.AppDirectory)]"/>
 					<RegistryKey Key="Capabilities">
-						<RegistryValue Name="ApplicationName" Type="string" Value="$(var.AppShortName)" KeyPath="yes" />
+						<RegistryValue Name="ApplicationName" Type="string" Value="$(var.AppShortName)" />
 						<RegistryValue Name="ApplicationDescription" Type="string" Value="$(var.AppDescription)" />
 						<RegistryValue Name="Hidden" Type="integer" Value="1" />
 					</RegistryKey>
@@ -278,6 +266,12 @@
 						<RegistryValue Name="BroadcastPortNumber" Type="integer" Value="[DEFAULT_BROADCAST_PORTNO]"/>
 					</RegistryKey>
 					<RegistryValue Name="EndTaskAppFlag" Type="integer" Value="0"/>
+				</RegistryKey>
+				<RegistryKey
+					Root="HKLM"
+					Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"
+				>
+					<RegistryValue Name="[#$(var.AppFileName)]" Type="string" Value="RUNASADMIN" />
 				</RegistryKey>
 			</Component>
 
