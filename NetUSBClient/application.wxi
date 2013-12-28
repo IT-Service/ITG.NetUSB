@@ -65,7 +65,7 @@
 
 		<!-- To Set the Application level Default AutoConnect Value
 		Can Take Values as 1 - TRUE AutoConnect Enable, or 0 - FALSE, AutoConnect Disable -->
-		<Property Id="DEFAULT_AUTOCONECT_VALUE" Admin="yes" Value="1"/>
+		<Property Id="DEFAULT_AUTOCONECT_VALUE" Admin="yes" Value="0"/>
 
 		<!-- To Set the Application level Default AutoReConnect Value
 		Can Take Values as 1 - TRUE AutoReConnect Enable, or 0 - FALSE, AutoReConnect Disable -->
