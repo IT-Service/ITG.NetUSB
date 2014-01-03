@@ -5,7 +5,7 @@
 	xmlns:fire="http://wixtoolset.org/schemas/v4/wxs/firewall"
 >
 
-	<?define ProductVersion="01.00.0054.0112"?>
+	<?define ProductVersion="01.00.0054.0113"?>
 	<?define ProductMajorVersion="1"?>
 	<?define ProductMinorVersion="0"?>
 	<?define ProductShortName="!(loc.ProductShortName)"?>
