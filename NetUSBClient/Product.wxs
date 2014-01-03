@@ -5,13 +5,14 @@
 	xmlns:fire="http://wixtoolset.org/schemas/v4/wxs/firewall"
 >
 
+	<?define ProductProjectVersion="1.1.3"?>
 	<?define ProductVersion="01.00.0054.0113"?>
 	<?define ProductMajorVersion="1"?>
 	<?define ProductMinorVersion="0"?>
 	<?define ProductShortName="!(loc.ProductShortName)"?>
 	<?define ProductInternalName="UsbIp"?>
 	<?define ProductDescription="!(loc.ProductDescription)"?>
-	<?define ProductName="$(var.ProductShortName) v$(var.ProductVersion)"?>
+	<?define ProductName="$(var.ProductShortName) v$(var.ProductVersion) $(sys.BUILDARCH)"?>
 	<?define ProductCode="{DC949B5B-EA12-46B7-B81E-17B77AEAE93C}"?>
 	<?define UpgradeCode="{FBFFB0C4-74AC-42B5-A530-2FAACA7DCF4C}"?>
 	<?define Manufacturer="!(loc.Manufacturer)"?>
@@ -46,6 +47,10 @@
 	<?endif?>
 
 	<?define ProductSettingsKey="$(var.Manufacturer)\$(var.ProductShortName)\$(var.ProductMajorVersion).$(var.ProductMinorVersion)" ?>
+
+	<!-- <?define ProductURIName="$(var.ProductInternalName)" ?> -->
+	<?define ProductURIName="ITG.NetUSB" ?>
+	<?define ProductURI="https://github.com/IT-Service/$(var.ProductURIName)" ?>
 
 	<Product
 		Id="$(var.ProductCode)"
@@ -104,12 +109,12 @@
 			<FeatureRef Id="ApplicationHelp" />
 		</Feature>
 
-		<Property Id="ARPREADME" Value="https://github.com/IT-Service/ITG.$(var.ProductInternalName)/blob/master/readme.md"/>
+		<Property Id="ARPREADME" Value="$(var.ProductURI)/blob/$(var.ProductProjectVersion)/readme.md"/>
 		<Property Id="ARPCOMMENTS" Value="$(var.ProductDescription)"/>
-		<Property Id="ARPURLINFOABOUT" Value="http://github.com/IT-Service/ITG.$(var.ProductInternalName)/blob/master/readme.md"/>
-		<Property Id="ARPURLUPDATEINFO" Value="http://github.com/IT-Service/ITG.$(var.ProductInternalName)/tags"/>
-		<Property Id="ARPHELPLINK" Value="http://github.com/IT-Service/ITG.$(var.ProductInternalName)/wiki"/>
-		<Property Id="ARPCONTACT" Value="ИТ-Сервис"/>
+		<Property Id="ARPURLINFOABOUT" Value="$(var.ProductURI)/blob/$(var.ProductProjectVersion)/readme.md"/>
+		<Property Id="ARPURLUPDATEINFO" Value="$(var.ProductURI)/releases"/>
+		<Property Id="ARPHELPLINK" Value="$(var.ProductURI)/issues" />
+		<Property Id="ARPCONTACT" Value="ИТ-Сервис" />
 
 		<?ifdef AdminImage ?>
 		<Property Id="ARPNOMODIFY" Value="1"/>
