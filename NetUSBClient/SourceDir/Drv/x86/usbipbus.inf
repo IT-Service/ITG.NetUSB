@@ -9,7 +9,7 @@ Signature="$WINDOWS NT$"
 Class=USB
 ClassGuid={36fc9e60-c465-11cf-8056-444553540000}
 Provider=%ProviderName%
-DriverVer=12/08/2012,1.0.0.45	;MM/DD/YYYY
+DriverVer=01/03/2014,1.0.0.45	;MM/DD/YYYY
 CatalogFile=usboip.cat
 
 [DestinationDirs]
