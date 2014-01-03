@@ -9,7 +9,7 @@ Signature="$WINDOWS NT$"
 Class=System
 ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
 Provider=%ProviderName%
-DriverVer=12/08/2012,1.0.0.25	;MM/DD/YYYY
+DriverVer=01/03/2014,1.0.0.25	;MM/DD/YYYY
 CatalogFile=usboip.cat
 
 [DestinationDirs]
