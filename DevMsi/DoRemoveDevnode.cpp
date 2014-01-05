@@ -117,83 +117,76 @@ HRESULT DEVMSI_API DoRemoveDevnode( int argc, LPWSTR* argv )
             hr = HRESULT_FROM_WIN32(GetLastError());
             CheckResult(hr, "SetupDiGetClassDevsEx( DIGCF_ALLCLASSES ) failed.");
         }
-		try {
 
-			if ( !SetupDiGetDeviceInfoListDetail( devs, &devInfoListDetail ) ) {
-				hr = HRESULT_FROM_WIN32(GetLastError());
-				CheckResult(hr, "SetupDiGetDeviceInfoListDetail() failed.");
-			};
-
-			bool devFound = false;
-			for ( devIndex = 0; SetupDiEnumDeviceInfo( devs, devIndex, &devInfo ); ++devIndex ) {
-				TCHAR devID[MAX_DEVICE_ID_LEN];
-				ci_wstringList hwIds, compatIds;
-				bool found = false;
-				//
-				// determine instance ID
-				//
-				if ( CR_SUCCESS == CM_Get_Device_ID_Ex( devInfo.DevInst, devID, 
-					MAX_DEVICE_ID_LEN, 0, devInfoListDetail.RemoteMachineHandle ) ) {
-						GetDeviceRegistryProperty(hwIds, devs, devInfo, SPDRP_HARDWAREID);
-						GetDeviceRegistryProperty(compatIds, devs, devInfo, SPDRP_COMPATIBLEIDS);
-
-						if ( !hwIds.empty() ) {
-							for ( auto iter = hwIds.begin(); iter != hwIds.end(); ++iter ) {
-								if ( *iter == devNodeName ) {
-									LogResult( S_OK, "Device '%ls' matched SPDRP_HARDWAREID '%ls'."
-										, devNodeName.c_str(), iter->c_str() );
-									found = true;
-								}
-							}
-						}
-						if ( !compatIds.empty() ) {
-							for ( auto iter = compatIds.begin(); iter != compatIds.end(); ++iter ) {
-								if ( *iter == devNodeName ) {
-									LogResult( S_OK, "Device '%ls' matched SPDRP_COMPATIBLEID '%ls'."
-										, devNodeName.c_str(), iter->c_str() );
-									found = true;
-								}
-							}
-						}
-
-						if ( found ) {
-							devFound = true;
-							SP_REMOVEDEVICE_PARAMS rmdParams;
-							rmdParams.ClassInstallHeader.cbSize = sizeof(SP_CLASSINSTALL_HEADER);
-							rmdParams.ClassInstallHeader.InstallFunction = DIF_REMOVE;
-							rmdParams.Scope = DI_REMOVEDEVICE_GLOBAL;
-							rmdParams.HwProfile = 0;
-
-							if(!SetupDiSetClassInstallParams(devs,&devInfo,&rmdParams.ClassInstallHeader,sizeof(rmdParams)) ) {
-								hr = HRESULT_FROM_WIN32(GetLastError());
-								CheckResult(hr, "SetupDiSetClassInstallParams() failed.");
-							}
-							if(!SetupDiCallClassInstaller(DIF_REMOVE,devs,&devInfo)) {
-								hr = HRESULT_FROM_WIN32(GetLastError());
-								CheckResult(hr, "SetupDiCallClassInstaller(DIF_REMOVE) failed.");
-							}
-
-							hr = S_OK;
-							LogResult(hr, "Device '%ls' removed.", devNodeName.c_str() );
-						}
-				}
-			} // for loop on devIndex
-			lastError = GetLastError();
-			if ( ERROR_NO_MORE_ITEMS == lastError ) {
-				if ( !devFound ) {
-					LogResult ( HRESULT_FROM_WIN32( lastError ), "Matching device not found, no device(s) removed." );
-				};
-				hr = S_OK;
-			} else {
-				hr = HRESULT_FROM_WIN32(lastError);
-				CheckResult(hr, "SetupDiEnumDeviceInfo() failed.");
-			}
-			SetupDiDestroyDeviceInfoList( devs );
-		} catch(...) {
-			SetupDiDestroyDeviceInfoList( devs );
-			throw;
+		if ( !SetupDiGetDeviceInfoListDetail( devs, &devInfoListDetail ) ) {
+			hr = HRESULT_FROM_WIN32(GetLastError());
+			CheckResult(hr, "SetupDiGetDeviceInfoListDetail() failed.");
 		};
-        LogResult( hr, "DoRemoveDevnode() Complete.");
+
+		bool devFound = false;
+		for ( devIndex = 0; SetupDiEnumDeviceInfo( devs, devIndex, &devInfo ); ++devIndex ) {
+			TCHAR devID[MAX_DEVICE_ID_LEN];
+			ci_wstringList hwIds, compatIds;
+			bool found = false;
+			//
+			// determine instance ID
+			//
+			if ( CR_SUCCESS == CM_Get_Device_ID_Ex( devInfo.DevInst, devID, 
+				MAX_DEVICE_ID_LEN, 0, devInfoListDetail.RemoteMachineHandle ) ) {
+					GetDeviceRegistryProperty(hwIds, devs, devInfo, SPDRP_HARDWAREID);
+					GetDeviceRegistryProperty(compatIds, devs, devInfo, SPDRP_COMPATIBLEIDS);
+
+					if ( !hwIds.empty() ) {
+						for ( auto iter = hwIds.begin(); iter != hwIds.end(); ++iter ) {
+							if ( *iter == devNodeName ) {
+								LogResult( S_OK, "Device '%ls' matched SPDRP_HARDWAREID '%ls'."
+									, devNodeName.c_str(), iter->c_str() );
+								found = true;
+							}
+						}
+					}
+					if ( !compatIds.empty() ) {
+						for ( auto iter = compatIds.begin(); iter != compatIds.end(); ++iter ) {
+							if ( *iter == devNodeName ) {
+								LogResult( S_OK, "Device '%ls' matched SPDRP_COMPATIBLEID '%ls'."
+									, devNodeName.c_str(), iter->c_str() );
+								found = true;
+							}
+						}
+					}
+
+					if ( found ) {
+						devFound = true;
+						SP_REMOVEDEVICE_PARAMS rmdParams;
+						rmdParams.ClassInstallHeader.cbSize = sizeof(SP_CLASSINSTALL_HEADER);
+						rmdParams.ClassInstallHeader.InstallFunction = DIF_REMOVE;
+						rmdParams.Scope = DI_REMOVEDEVICE_GLOBAL;
+						rmdParams.HwProfile = 0;
+
+						if(!SetupDiSetClassInstallParams(devs,&devInfo,&rmdParams.ClassInstallHeader,sizeof(rmdParams)) ) {
+							hr = HRESULT_FROM_WIN32(GetLastError());
+							CheckResult(hr, "SetupDiSetClassInstallParams() failed.");
+						}
+						if(!SetupDiCallClassInstaller(DIF_REMOVE,devs,&devInfo)) {
+							hr = HRESULT_FROM_WIN32(GetLastError());
+							CheckResult(hr, "SetupDiCallClassInstaller(DIF_REMOVE) failed.");
+						}
+						hr = S_OK;
+						LogResult(hr, "Device '%ls' removed.", devNodeName.c_str() );
+					}
+			}
+		} // for loop on devIndex
+		lastError = GetLastError();
+		if ( ERROR_NO_MORE_ITEMS == lastError ) {
+			if ( !devFound ) {
+				LogResult ( HRESULT_FROM_WIN32( lastError ), "Matching device not found, no device(s) removed." );
+			};
+			hr = S_OK;
+		} else {
+			hr = HRESULT_FROM_WIN32(lastError);
+			CheckResult(hr, "SetupDiEnumDeviceInfo() failed.");
+		}
+		LogResult( hr, "DoRemoveDevnode() Complete.");
     }
     catch( HRESULT& _error )
     {
