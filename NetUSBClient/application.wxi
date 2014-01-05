@@ -44,10 +44,9 @@
 			TypicalDefault="install"
 			Title="$(var.AppShortName)"
 			Description="$(var.AppDescription)."
+			ConfigurableDirectory="$(var.AppDirectory)"
 		>
 			<ComponentGroupRef Id="ApplicationComponents" Primary="yes"/>
-
-			<FeatureRef Id="Drivers"/>
 		</Feature>
 
 		<ComponentGroup Id="ApplicationComponents">
