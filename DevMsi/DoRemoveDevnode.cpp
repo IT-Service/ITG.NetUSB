@@ -6,6 +6,9 @@
 #include "AutoClose.h"
 #include <cfgmgr32.h>
 
+// WiX Header Files:
+#include <wcautil.h>
+
 /**
  * An array of wide strings that do case-insensitive comparisons.
  */
@@ -173,6 +176,19 @@ HRESULT DEVMSI_API DoRemoveDevnode( int argc, LPWSTR* argv )
 						}
 						hr = S_OK;
 						LogResult(hr, "Device '%ls' removed.", devNodeName.c_str() );
+						//
+						// see if device needs reboot
+						//
+						SP_DEVINSTALL_PARAMS devParams;
+						devParams.cbSize = sizeof(devParams);
+						if (
+							SetupDiGetDeviceInstallParams( devs, &devInfo, &devParams )
+							&& (devParams.Flags & ( DI_NEEDRESTART | DI_NEEDREBOOT ) )
+						) {
+							lastError = MsiSetMode( WcaGetInstallHandle(), MSIRUNMODE_REBOOTATEND, TRUE);
+							hr = HRESULT_FROM_WIN32( lastError );
+							LogResult( hr, "Reboot required.");
+						};
 					}
 			}
 		} // for loop on devIndex
