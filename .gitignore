@@ -6,3 +6,9 @@ obj
 DevMsi.exp
 DevMsi.lib
 DevMsi.pdb
+
+/Device Console (DevCon) Tool
+*.sdf
+*.opensdf
+sign.log
+ipch

@@ -27,6 +27,7 @@
 			TypicalDefault="install"
 			Title="$(var.AppShortName)"
 			Description="$(var.AppDescription)."
+			ConfigurableDirectory="$(var.AppDirectory)"
 		>
 			<ComponentGroupRef Id="ApplicationHelpComponents" Primary="yes"/>
 		</Feature>

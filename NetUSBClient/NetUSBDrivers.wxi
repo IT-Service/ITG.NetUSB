@@ -6,7 +6,7 @@
 	<Fragment>
 
 		<Feature
-			Id="Drivers"
+			Id="Drivers_v$(var.DriversVersion)"
 			Level="1"
 			Absent="disallow"
 			Display="collapse"
@@ -27,7 +27,8 @@
 		<DirectoryRef Id="TempFolder">
 			<Directory
 				Id="Drivers"
-				Name="Drivers"
+				Name="$(var.ProductShortName) Drivers v$(var.DriversVersion) $(sys.BUILDARCH)"
+				SourceName="Drivers"
 				ComponentGuidGenerationSeed="{1C22B731-6369-49FD-BA40-59B846B8A482}"
 				FileSource=".\SourceDir\Drv\$(sys.BUILDARCH)"
 			>
@@ -39,14 +40,14 @@
 				>
 					<Component
 						Id="usbipbus.inf"
-						Guid="{F7833C49-88E4-41AA-B9A3-81BC176459AD}"
+						Guid="{2DBED192-6ACF-441D-A3C1-A3CD1ED3E1F0}"
 						Location="local"
 					>
 						<RegistryKey
 							Root="HKLM"
 							Key="$(var.AppRegKey)"
 						>
-							<RegistryValue Name="usbipbus Driver installed" Type="integer" Value="1" KeyPath="yes"/>
+							<RegistryValue Name="usbipbus v$(var.DriversVersion) $(sys.BUILDARCH) Driver installed" Type="integer" Value="1" KeyPath="yes"/>
 						</RegistryKey>
 						<File
 							Name="usbipbus.inf"
@@ -77,14 +78,14 @@
 				>
 					<Component
 						Id="vbusenum.inf"
-						Guid="{4FBEA5FF-ED5A-453C-A750-3C2B34DD23EA}"
+						Guid="{BB1C265F-F12A-430A-979B-CA687CA0779E}"
 						Location="local"
 					>
 						<RegistryKey
 							Root="HKLM"
 							Key="$(var.AppRegKey)"
 						>
-							<RegistryValue Name="vbusenum Driver installed" Type="integer" Value="1" KeyPath="yes"/>
+							<RegistryValue Name="vbusenum v$(var.DriversVersion) $(sys.BUILDARCH) Driver installed" Type="integer" Value="1" KeyPath="yes"/>
 						</RegistryKey>
 						<File
 							Name="vbusenum.inf"
@@ -114,8 +115,9 @@
 			Id="DevMsi"
 			SourceFile=".\..\DevMsi\bin\Release\$(sys.BUILDARCH)\DevMsi.dll"
 		/>
+		<?foreach DeviceId in VBusEnum;VBus?>
 		<CustomAction
-			Id="AddDevice"
+			Id="AddDevice.$(var.DeviceId)"
 			BinaryKey="DevMsi"
 			DllEntry="CreateDevnode"
 			Return="check"
@@ -123,7 +125,7 @@
 			Impersonate="no"
 		/>
 		<CustomAction
-			Id="RemoveDevice"
+			Id="RemoveDevice.$(var.DeviceId)"
 			BinaryKey="DevMsi"
 			DllEntry="RemoveDevnode"
 			Return="ignore"
@@ -131,67 +133,105 @@
 			Impersonate="no"
 		/>
 		<CustomAction
-			Id="RemoveDeviceServices"
+			Id="RemoveDeviceServices.$(var.DeviceId)"
 			Return="ignore"
 			BinaryKey="DevMsi"
 			DllEntry="RemoveService"
 			Execute="deferred"
 			Impersonate="no"
 		/>
+		<?endforeach?>
 
 		<CustomAction
-			Id="AddDevice.SetParam"
+			Id="AddDevice.VBusEnum.SetParam"
 			Return="check"
-			Property="AddDevice"
+			Property="AddDevice.VBusEnum"
 			Value='"[#vbusenum.inf]" root\vbusenum'
 		/>
 		<CustomAction
-			Id="RemoveDevice.SetParam"
+			Id="RemoveDevice.VBusEnum.SetParam"
 			Return="check"
-			Property="RemoveDevice"
+			Property="RemoveDevice.VBusEnum"
 			Value="root\vbusenum"
 		/>
 		<CustomAction
-			Id="RemoveDeviceServices.SetParam"
+			Id="RemoveDeviceServices.VBusEnum.SetParam"
 			Return="check"
-			Property="RemoveDeviceServices"
+			Property="RemoveDeviceServices.VBusEnum"
 			Value="vbusenum"
+		/>
+		<CustomAction
+			Id="RemoveDevice.VBus.SetParam"
+			Return="check"
+			Property="RemoveDevice.VBus"
+			Value="USB\VirtualUSB"
+		/>
+		<CustomAction
+			Id="RemoveDeviceServices.VBus.SetParam"
+			Return="check"
+			Property="RemoveDeviceServices.VBus"
+			Value="VUSB"
 		/>
 
 		<InstallExecuteSequence>
 			<Custom
-				Action="RemoveDevice.SetParam"
-				Before="RemoveDevice"
+				Action="RemoveDevice.VBus.SetParam"
+				Before="RemoveDevice.VBus"
 			>
 				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
 			</Custom>
 			<Custom
-				Action="RemoveDevice"
-				Before="RemoveDeviceServices"
+				Action="RemoveDevice.VBus"
+				Before="RemoveDeviceServices.VBus"
 			>
 				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
 			</Custom>
 			<Custom
-				Action="RemoveDeviceServices.SetParam"
-				Before="RemoveDeviceServices"
+				Action="RemoveDeviceServices.VBus.SetParam"
+				Before="RemoveDeviceServices.VBus"
 			>
 				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
 			</Custom>
 			<Custom
-				Action="RemoveDeviceServices"
+				Action="RemoveDeviceServices.VBus"
+				Before="RemoveDevice.VBusEnum.SetParam"
+			>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
+			</Custom>
+
+			<Custom
+				Action="RemoveDevice.VBusEnum.SetParam"
+				Before="RemoveDevice.VBusEnum"
+			>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
+			</Custom>
+			<Custom
+				Action="RemoveDevice.VBusEnum"
+				Before="RemoveDeviceServices.VBusEnum"
+			>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
+			</Custom>
+			<Custom
+				Action="RemoveDeviceServices.VBusEnum.SetParam"
+				Before="RemoveDeviceServices.VBusEnum"
+			>
+				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
+			</Custom>
+			<Custom
+				Action="RemoveDeviceServices.VBusEnum"
 				Before="RemoveFiles"
 			>
 				<![CDATA[(VersionNT > 400) AND (?vbusenum.inf = 3) AND ($vbusenum.inf = 2)]]>
 			</Custom>
 
 			<Custom
-				Action="AddDevice.SetParam"
-				Before="AddDevice"
+				Action="AddDevice.VBusEnum.SetParam"
+				Before="AddDevice.VBusEnum"
 			>
 				<![CDATA[(VersionNT > 400) AND ($vbusenum.inf = 3) AND (?vbusenum.inf = 2)]]>
 			</Custom>
 			<Custom
-				Action="AddDevice"
+				Action="AddDevice.VBusEnum"
 				After="MsiProcessDrivers"
 			>
 				<![CDATA[(VersionNT > 400) AND ($vbusenum.inf = 3) AND (?vbusenum.inf = 2)]]>
