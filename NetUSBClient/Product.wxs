@@ -6,8 +6,8 @@
 	xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util"
 >
 
-	<?define ProductProjectVersion="1.1.5"?>
-	<?define ProductVersion="01.00.0054.0115"?>
+	<?define ProductProjectVersion="1.1.6"?>
+	<?define ProductVersion="01.00.0054.0116"?>
 	<?define DriversVersion="01.00.0054.0114"?>
 	<?define ProductMajorVersion="1"?>
 	<?define ProductMinorVersion="0"?>
