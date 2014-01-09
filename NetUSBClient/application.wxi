@@ -2,6 +2,7 @@
 <Include
 	xmlns="http://wixtoolset.org/schemas/v4/wxs"
 	xmlns:fire="http://wixtoolset.org/schemas/v4/wxs/firewall"
+	xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util"
 >
 	<Fragment>
 
@@ -274,6 +275,15 @@
 					Root="HKLM"
 					Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 					Name="USB Server Admin Utility"
+				/>
+				<!-- "правильный" вариант [#$(var.AppFileName)] сейчас использовать нельзя, потому как файлы приложения не содержат необходимых ресурсов -->
+				<util:EventSource
+					Name="$(var.AppServiceName)"
+					Log="Application"
+					EventMessageFile="%SystemRoot%\System32\wshext.dll"
+					SupportsErrors="yes"
+					SupportsInformationals="yes"
+					SupportsWarnings="yes"
 				/>
 			</Component>
 
