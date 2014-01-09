@@ -42,12 +42,15 @@
     <Folder Include="SourceDir\Drv" />
     <Folder Include="SourceDir\Drv\x86" />
     <Folder Include="SourceDir\Drv\x64" />
+    <Folder Include="SourceDir\PolicyDefinitions" />
+    <Folder Include="SourceDir\PolicyDefinitions\ru-RU" />
     <Folder Include="SourceDir\ProgramFiles" />
     <Folder Include="SourceDir\ProgramFiles\x86" />
     <Folder Include="SourceDir\ProgramFiles\x64" />
     <Folder Include="SourceDir\System32" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admx.wxi" />
     <Content Include="application.wxi" />
     <Content Include="Icons\help.ico" />
     <Content Include="Icons\Product.ico" />
@@ -65,6 +68,8 @@
     <Content Include="SourceDir\Drv\x64\vbusenum.sys" />
     <Content Include="SourceDir\Drv\x64\[itg] update.cmd" />
     <Content Include="SourceDir\Drv\x86\[itg] update.cmd" />
+    <Content Include="SourceDir\PolicyDefinitions\ru-RU\VScom USBIP.adml" />
+    <Content Include="SourceDir\PolicyDefinitions\VScom USBIP.admx" />
     <Content Include="SourceDir\ProgramFiles\USB-ServerHelp.chm" />
     <Content Include="SourceDir\ProgramFiles\x64\NUPortAdmin.exe" />
     <Content Include="SourceDir\ProgramFiles\x64\QuickConfigDlg.exe" />

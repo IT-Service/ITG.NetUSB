@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include
+	xmlns="http://wixtoolset.org/schemas/v4/wxs"
+>
+	<Fragment>
+
+		<?define AdmxShortName="$(var.ProductShortName) - !(loc.PolicyDefinitions)"?>
+		<?define AdmxInternalName="ApplicationAdmx"?>
+		<?define AdmxDescription="!(loc.PolicyDefinitions)"?>
+		<?define AdmxFileId="$(var.ManufacturerId)$(var.ProductInternalName)Admx"?>
+		<?define AdmxFileName="$(var.ManufacturerId) $(var.ProductInternalName)"?>
+
+		<Feature
+			Id="$(var.AdmxInternalName)"
+			Level="100"
+			Absent="allow"
+			Display="10"
+			AllowAdvertise="no"
+			InstallDefault="local"
+			TypicalDefault="install"
+			Title="$(var.AdmxShortName)"
+			Description="$(var.AdmxDescription)."
+		>
+		</Feature>
+
+		<DirectoryRef Id="WindowsFolder">
+			<Directory Id="PolicyDefinitions" Name="PolicyDefinitions">
+				<Directory Id="PolicyDefinitions_ru_RU" Name="ru-RU">
+				</Directory>
+			</Directory>
+		</DirectoryRef>
+
+		<DirectoryRef Id="PolicyDefinitions"  FileSource=".\SourceDir\PolicyDefinitions">
+			<Component
+				Id="$(var.AdmxInternalName)_admx"
+				Guid="{A91D7534-7C27-40A2-9739-E355839CF6BB}"
+				Location="local"
+				Feature="$(var.AdmxInternalName)"
+			>
+				<File
+					Id="$(var.AdmxFileId)"
+					Name="$(var.AdmxFileName).admx"
+					KeyPath="yes"
+					Vital="no"
+				/>
+			</Component>
+		</DirectoryRef>
+
+		<DirectoryRef Id="PolicyDefinitions_ru_RU"  FileSource=".\SourceDir\PolicyDefinitions\ru-RU">
+			<Component
+				Id="$(var.AdmxInternalName)_ru_RU"
+				Guid="{7C61F784-949F-4E89-84A1-462BE71106D7}"
+				Location="local"
+				Feature="$(var.AdmxInternalName)"
+			>
+				<File
+					Name="$(var.AdmxFileName).adml"
+					CompanionFile="$(var.AdmxFileId)"
+					Vital="no"
+				/>
+			</Component>
+		</DirectoryRef>
+
+	</Fragment>
+</Include>

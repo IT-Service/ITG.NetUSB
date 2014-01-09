@@ -5,8 +5,8 @@
 	xmlns:fire="http://wixtoolset.org/schemas/v4/wxs/firewall"
 >
 
-	<?define ProductProjectVersion="1.1.4"?>
-	<?define ProductVersion="01.00.0054.0114"?>
+	<?define ProductProjectVersion="1.1.5"?>
+	<?define ProductVersion="01.00.0054.0115"?>
 	<?define DriversVersion="01.00.0054.0114"?>
 	<?define ProductMajorVersion="1"?>
 	<?define ProductMinorVersion="0"?>
@@ -62,6 +62,7 @@
 		Manufacturer="$(var.Manufacturer)"
 		UpgradeCode="$(var.UpgradeCode)"
 	>
+
 		<Package
 			InstallerVersion="500"
 			InstallScope="perMachine"
@@ -76,6 +77,11 @@
 			Comments="!(loc.PackageDescription) $(var.ProductName)."
 			Keywords="Installer, $(var.ProductShortName)"
 		/>
+
+		<FeatureRef Id="Application" />
+		<FeatureRef Id="ApplicationHelp" />
+		<FeatureRef Id="Drivers_v$(var.DriversVersion)" />
+		<FeatureRef Id="ApplicationAdmx" />
 
 		<Upgrade Id="$(var.UpgradeCode)">
 			<UpgradeVersion
@@ -122,10 +128,6 @@
 				Property="ORIGINAL_MSI_DETECTED"
 			/>
 		</Upgrade>
-
-		<FeatureRef Id="Application" />
-		<FeatureRef Id="ApplicationHelp" />
-		<FeatureRef Id="Drivers_v$(var.DriversVersion)" />
 
 		<Property Id="ARPREADME" Value="$(var.ProductURI)/blob/$(var.ProductProjectVersion)/readme.md"/>
 		<Property Id="ARPCOMMENTS" Value="$(var.ProductDescription)"/>
@@ -250,6 +252,7 @@
 	</Product>
 
 	<?include application.wxi ?>
+	<?include admx.wxi ?>
 	<?include USBServerHelp.wxi ?>
 	<?include WixUI_MondoWithoutLicenseDlg.wxi?>
 

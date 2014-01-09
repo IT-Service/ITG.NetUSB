@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitions
+	xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions"
+	revision="1.0"
+	schemaVersion="1.0"
+>
+	<policyNamespaces>
+		<target prefix="usbip_parameters" namespace="VScom.Policies.USBIP.Parameters" />
+		<using prefix="windows" namespace="Microsoft.Policies.Windows" />
+	</policyNamespaces>
+
+	<resources minRequiredRevision="1.0"/>
+
+	<categories>
+		<category
+			name="VScom"
+			displayName="$(string.VScom)"
+		>
+		</category>
+		<category
+			name="USBIPParameters"
+			displayName="$(string.USBIPParameters)"
+			explainText="$(string.USBIPParameters_Explain)"
+		>
+			<parentCategory ref="VScom"/>
+		</category>
+	</categories>
+
+	<policies>
+
+		<policy
+			name="AppAutoConnect"
+			class="Machine"
+			displayName="$(string.AppAutoConnect)"
+			explainText="$(string.AppAutoConnect_Help)"
+			key="SOFTWARE\NUPort\Parameters"
+			valueName="AppAutoConnect"
+		>
+			<parentCategory ref="USBIPParameters" />
+			<supportedOn ref="windows:SUPPORTED_Win2k" />
+			<enabledValue>
+				<decimal value="1" />
+			</enabledValue>
+			<disabledValue>
+				<decimal value="0" />
+			</disabledValue>
+		</policy>
+
+		<policy
+			name="AppAutoReconnect"
+			class="Machine"
+			displayName="$(string.AppAutoReconnect)"
+			explainText="$(string.AppAutoReconnect_Help)"
+			key="SOFTWARE\NUPort\Parameters"
+			valueName="AppAutoReconnect"
+		>
+			<parentCategory ref="USBIPParameters" />
+			<supportedOn ref="windows:SUPPORTED_Win2k" />
+			<enabledValue>
+				<decimal value="1" />
+			</enabledValue>
+			<disabledValue>
+				<decimal value="0" />
+			</disabledValue>
+		</policy>
+
+		<policy
+			name="GenNetworkThrottle"
+			class="Machine"
+			displayName="$(string.GenNetworkThrottle)"
+			explainText="$(string.GenNetworkThrottle_Help)"
+			key="SOFTWARE\NUPort\Parameters"
+			valueName="GenNetworkThrottle"
+		>
+			<parentCategory ref="USBIPParameters" />
+			<supportedOn ref="windows:SUPPORTED_Windows7" />
+			<enabledValue>
+				<decimal value="1" />
+			</enabledValue>
+			<disabledValue>
+				<decimal value="0" />
+			</disabledValue>
+		</policy>
+
+		<policy
+			name="BroadcastPortNumber"
+			class="Machine"
+			displayName="$(string.BroadcastPortNumber)"
+			explainText="$(string.BroadcastPortNumber_Help)"
+			key="SOFTWARE\NUPort\Parameters"
+			presentation="$(presentation.BroadcastPortNumber)"
+		>
+			<parentCategory ref="USBIPParameters" />
+			<supportedOn ref="windows:SUPPORTED_Win2k" />
+			<elements>
+				<decimal id="BroadcastPortNumber" minValue="1" maxValue="65535" valueName="BroadcastPortNumber"/>
+			</elements>
+		</policy>
+
+		<policy
+			name="AppGuiRefreshPeriod"
+			class="Machine"
+			displayName="$(string.AppGuiRefreshPeriod)"
+			explainText="$(string.AppGuiRefreshPeriod_Help)"
+			key="SOFTWARE\NUPort\Parameters"
+			presentation="$(presentation.AppGuiRefreshPeriod)"
+		>
+			<parentCategory ref="USBIPParameters" />
+			<supportedOn ref="windows:SUPPORTED_Win2k" />
+			<elements>
+				<decimal id="AppGuiRefreshPeriod" minValue="100" maxValue="65535" valueName="AppGuiRefreshPeriod"/>
+			</elements>
+		</policy>
+
+		<policy
+			name="AppStartMinimized"
+			class="Machine"
+			displayName="$(string.AppStartMinimized)"
+			explainText="$(string.AppStartMinimized_Help)"
+			key="SOFTWARE\NUPort\Parameters"
+			valueName="AppStartMinimized"
+		>
+			<parentCategory ref="USBIPParameters" />
+			<supportedOn ref="windows:SUPPORTED_Win2k" />
+			<enabledValue>
+				<decimal value="1" />
+			</enabledValue>
+			<disabledValue>
+				<decimal value="0" />
+			</disabledValue>
+		</policy>
+
+		<policy
+			name="AppStopDeviceMappingPeriod"
+			class="Machine"
+			displayName="$(string.AppStopDeviceMappingPeriod)"
+			explainText="$(string.AppStopDeviceMappingPeriod_Help)"
+			key="SOFTWARE\NUPort\Parameters"
+			presentation="$(presentation.AppStopDeviceMappingPeriod)"
+		>
+			<parentCategory ref="USBIPParameters" />
+			<supportedOn ref="windows:SUPPORTED_Win2k" />
+			<elements>
+				<decimal id="AppStopDeviceMappingPeriod" minValue="100" maxValue="360000" valueName="AppStopDeviceMappingPeriod"/>
+			</elements>
+		</policy>
+
+		<policy
+			name="AppTraceLevel"
+			class="Machine"
+			displayName="$(string.AppTraceLevel)"
+			explainText="$(string.AppTraceLevel_Help)"
+			key="SOFTWARE\NUPort\Parameters"
+			presentation="$(presentation.AppTraceLevel)"
+		>
+			<parentCategory ref="USBIPParameters" />
+			<supportedOn ref="windows:SUPPORTED_Win2k" />
+			<elements>
+				<enum
+					id="AppTraceLevel"
+					valueName="AppTraceLevel"
+				>
+					<item displayName="$(string.AppTraceLevel_Disable)">
+						<value>
+							<decimal value="4"/>
+						</value>
+					</item>
+					<item displayName="$(string.AppTraceLevel_Error)">
+						<value>
+							<decimal value="3"/>
+						</value>
+					</item>
+					<item displayName="$(string.AppTraceLevel_Trace)">
+						<value>
+							<decimal value="2"/>
+						</value>
+					</item>
+					<item displayName="$(string.AppTraceLevel_Info)">
+						<value>
+							<decimal value="1"/>
+						</value>
+					</item>
+					<item displayName="$(string.AppTraceLevel_Noise)">
+						<value>
+							<decimal value="0"/>
+						</value>
+					</item>
+				</enum>
+			</elements>
+		</policy>
+
+	</policies>
+
+</policyDefinitions>

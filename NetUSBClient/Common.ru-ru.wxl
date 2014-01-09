@@ -8,4 +8,5 @@
 	<String Id="LaunchAfterInstall">Запустить установленный продукт сейчас</String>
 
 	<String Id="Help">Справка</String>
+	<String Id="PolicyDefinitions">Шаблоны групповых политик</String>
 </WixLocalization>

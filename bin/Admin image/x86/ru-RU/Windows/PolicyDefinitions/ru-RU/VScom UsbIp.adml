@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources
+	xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions"
+	revision="1.0" schemaVersion="1.0"
+>
+	<displayName>Файл шаблона групповой политики VScom NetUSB</displayName>
+	<description>В этом ADMX-файле описывается шаблон политики для компонентов клиентской части программного продукта VScom NetUSB (программно-аппаратного решения для подключения USB устройств через ethernet сети).</description>
+	<resources>
+		<stringTable>
+			<string id="VScom">VScom</string>
+			<string id="USBIPParameters">Параметры NetUSB</string>
+			<string id="USBIPParameters_Explain">Параметры программного обеспечения для NetUSB-400i (для подключения USB устройств удалённо через ip сети).</string>
+
+			<string id="AppAutoConnect">Автоподключение новых USB устройств</string>
+			<string id="AppAutoConnect_Help"><![CDATA[При включении данной политики все подключаемые USB устройства к NetUSB будут автоматически "захвачены" клиентом и подключены к нему. Включать данную политику следует только в том случае, если у Вы планируете только одного клиента, в противном случае предсказать, к какому клиенту с включенной данной политикой будет подключено новое USB устройство, не представляется возможным.
+
+Если данная политика отключена или не задана, то все подключенные в будущем к NetUSB устройства автоматически подключаться к клиенту не будут, необходимо будет их явное подключение.
+
+Но это не означает, что подключенные устройства не будут автоматически переподключаться при потери связи / перезагрузке (см. Восстановление потерянного подключения к устройству).
+
+Подробнее - https://github.com/IT-Service/ITG.NetUSB#default_autoconect_value. ]]></string>
+
+			<string id="AppAutoReconnect">Восстановление потерянного подключения к устройству</string>
+			<string id="AppAutoReconnect_Help"><![CDATA[При включении данной политики при потере связи будут выполняться попытки восстановления подключения, и устройство будет переподключено, как только подключение будет восстановлено.
+
+Если данная политика отключена или не задана, то после потери связи (после перезагрузки клиента, сервера, сетевых проблем, перезапуска службы и т.д.) подключенные ранее устройства автоматически подключены вновь не будут.
+
+Включение данной политики рекомендуется. 
+
+Подробнее - https://github.com/IT-Service/ITG.NetUSB#default_autoreconect_value. ]]></string>
+
+			<string id="GenNetworkThrottle">Контроль полосы пропускания</string>
+			<string id="GenNetworkThrottle_Help"><![CDATA[При включении данной политики будут задействованы механизмы Windows 7 для выделения сетевого канала с гарантированной пропускной способностью, чтобы исключить возможные проблемы с подключенными USB устройствами, связанные с загруженностью сетевого подключения другими приложениями.
+
+Если данная политика отключена или не задана, то указанные выше механизмы задействованы не будут.
+
+Включение данной политики рекомендуется. 
+
+Подробнее - https://github.com/IT-Service/ITG.NetUSB#default_general_network_throttle. ]]></string>
+
+			<string id="BroadcastPortNumber">Порт для обнаружения NetUSB серверов</string>
+			<string id="BroadcastPortNumber_Help"><![CDATA[UDP порт для приёма широковещательных пакетов от NetUSB серверов. NetUSB сервера периодически рассылают широковещательные UDP пакеты с целью оповещения слушателей (клиентов) о себе.
+
+По умолчанию используется порт 6000 для приёма широковещательных UDP уведомлений.
+
+Изменение данной политики повлияет только на NetUSB клиентов, но не на NetUSB сервера. Порт, на который NetUSB сервер рассылает широковещательные уведомления, можно изменить через веб-консоль сервера. 
+
+Подробнее - https://github.com/IT-Service/ITG.NetUSB#default_broadcast_portno. ]]></string>
+
+			<string id="AppGuiRefreshPeriod">Период обновления интерфейса пользователя</string>
+			<string id="AppGuiRefreshPeriod_Help"><![CDATA[Период обновления информации в интерфейсе пользователя (в мс).
+
+По умолчанию - 5 секунд (5000 мс).]]></string>
+
+			<string id="AppStartMinimized">Запускать свёрнутым</string>
+			<string id="AppStartMinimized_Help"><![CDATA[При включении данной политики окно приложения при запуске будет свёрнуто и скрыто, вызывать его можно будет только через значок в области уведомлений (в tray).
+				
+При отключии данной политики окно приложения будет показано при запуске.
+
+Рекомендуется отключать данную политику.]]></string>
+
+			<string id="AppStopDeviceMappingPeriod">Таймаут отключения устройств</string>
+			<string id="AppStopDeviceMappingPeriod_Help"><![CDATA[Таймаут (в мс) на отключение (eject) подключенных устройств при остановке функции сопоставления устройств.
+
+Величина этого таймаута влияет и на время остановки службы, поэтому при изменении данного значения следует учитывать и таймаут остановки служб, установленные в системе.
+
+По умолчанию - 180 секунд (180000 мс).]]></string>
+
+			<string id="AppTraceLevel">Детализация событий</string>
+			<string id="AppTraceLevel_Help"><![CDATA[Данная политика позволяет указать детализацию событий в журнале событий, генерируемых NetUSB.]]></string>
+
+			<string id="AppTraceLevel_Disable">Не регистрировать события</string>
+			<string id="AppTraceLevel_Error">Только ошибки</string>
+			<string id="AppTraceLevel_Trace">Ошибки и отладочная информация</string>
+			<string id="AppTraceLevel_Info">Ошибки и информация</string>
+			<string id="AppTraceLevel_Noise">Ошибки, информация и подробные сведения</string>
+
+		</stringTable>
+
+		<presentationTable>
+			<presentation id="BroadcastPortNumber">
+				<text>UDP порт:</text>
+				<decimalTextBox
+					refId="BroadcastPortNumber"
+					defaultValue="6000"
+					spin="true"
+					spinStep="1"
+				/>
+			</presentation>
+
+			<presentation id="AppGuiRefreshPeriod">
+				<text>Период обновления информации в интерфейсе пользователя (в мс):</text>
+				<decimalTextBox
+					refId="AppGuiRefreshPeriod"
+					defaultValue="5000"
+					spin="true"
+					spinStep="500"
+				/>
+			</presentation>
+
+			<presentation id="AppStopDeviceMappingPeriod">
+				<text>Таймаут на отключение подключенных устройств (в мс):</text>
+				<decimalTextBox
+					refId="AppStopDeviceMappingPeriod"
+					defaultValue="180000"
+					spin="true"
+					spinStep="1000"
+				/>
+			</presentation>
+
+			<presentation id="AppTraceLevel">
+				<text>Уровень детализации событий:</text>
+				<dropdownList 
+					refId="AppTraceLevel"
+					noSort="true"
+					defaultItem="1"
+				/>
+			</presentation>
+		</presentationTable>
+	</resources>
+</policyDefinitionResources>
