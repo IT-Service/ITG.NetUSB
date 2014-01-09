@@ -270,6 +270,11 @@
 				>
 					<RegistryValue Name="[#$(var.AppFileName)]" Type="string" Value="RUNASADMIN" />
 				</RegistryKey>
+				<RemoveRegistryValue 
+					Root="HKLM"
+					Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+					Name="USB Server Admin Utility"
+				/>
 			</Component>
 
 			<Component
