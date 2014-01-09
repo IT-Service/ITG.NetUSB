@@ -3,6 +3,7 @@
 	xmlns="http://wixtoolset.org/schemas/v4/wxs"
 	xmlns:difx="http://wixtoolset.org/schemas/v4/wxs/difxapp"
 	xmlns:fire="http://wixtoolset.org/schemas/v4/wxs/firewall"
+	xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util"
 >
 
 	<?define ProductProjectVersion="1.1.5"?>
