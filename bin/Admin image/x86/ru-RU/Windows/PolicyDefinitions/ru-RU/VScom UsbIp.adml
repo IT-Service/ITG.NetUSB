@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <policyDefinitionResources
 	xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions"
-	revision="1.0" schemaVersion="1.0"
+	revision="1.1" schemaVersion="1.0"
 >
 	<displayName>Файл шаблона групповой политики VScom NetUSB</displayName>
 	<description>В этом ADMX-файле описывается шаблон политики для компонентов клиентской части программного продукта VScom NetUSB (программно-аппаратного решения для подключения USB устройств через ethernet сети).</description>
@@ -75,6 +75,22 @@
 			<string id="AppTraceLevel_Info">Ошибки и информация</string>
 			<string id="AppTraceLevel_Noise">Ошибки, информация и подробные сведения</string>
 
+			<string id="BusEnumTraceLevel">Детализация событий перечислителя шин</string>
+			<string id="BusEnumTraceLevel_Help"><![CDATA[Данная политика позволяет указать детализацию событий в журнале событий, генерируемых перечислителем виртуальных USB шин NetUSB.
+
+Каждому серверу NetUSB ставится в соответствие виртуальная USB шина.]]></string>
+
+			<string id="TraceLevel_Disable">Не регистрировать события</string>
+			<string id="TraceLevel_Error">Только ошибки</string>
+			<string id="TraceLevel_Trace">Ошибки и отладочная информация</string>
+			<string id="TraceLevel_Info">Ошибки и информация</string>
+			<string id="TraceLevel_Noise">Ошибки, информация и подробные сведения</string>
+
+			<string id="BusTraceLevel">Детализация событий виртуальных шин</string>
+			<string id="BusTraceLevel_Help"><![CDATA[Данная политика позволяет указать детализацию событий в журнале событий, генерируемых виртуальными USB шинами NetUSB.
+
+Каждому серверу NetUSB ставится в соответствие виртуальная USB шина.]]></string>
+
 		</stringTable>
 
 		<presentationTable>
@@ -108,14 +124,15 @@
 				/>
 			</presentation>
 
-			<presentation id="AppTraceLevel">
+			<presentation id="TraceLevel">
 				<text>Уровень детализации событий:</text>
 				<dropdownList 
-					refId="AppTraceLevel"
+					refId="TraceLevel"
 					noSort="true"
 					defaultItem="1"
 				/>
 			</presentation>
+
 		</presentationTable>
 	</resources>
 </policyDefinitionResources>

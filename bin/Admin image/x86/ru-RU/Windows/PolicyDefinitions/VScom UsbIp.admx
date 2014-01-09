@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <policyDefinitions
 	xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions"
-	revision="1.0"
+	revision="1.1"
 	schemaVersion="1.0"
 >
 	<policyNamespaces>
@@ -151,13 +151,13 @@
 			displayName="$(string.AppTraceLevel)"
 			explainText="$(string.AppTraceLevel_Help)"
 			key="SOFTWARE\NUPort\Parameters"
-			presentation="$(presentation.AppTraceLevel)"
+			presentation="$(presentation.TraceLevel)"
 		>
 			<parentCategory ref="USBIPParameters" />
 			<supportedOn ref="windows:SUPPORTED_Win2k" />
 			<elements>
 				<enum
-					id="AppTraceLevel"
+					id="TraceLevel"
 					valueName="AppTraceLevel"
 				>
 					<item displayName="$(string.AppTraceLevel_Disable)">
@@ -183,6 +183,94 @@
 					<item displayName="$(string.AppTraceLevel_Noise)">
 						<value>
 							<decimal value="0"/>
+						</value>
+					</item>
+				</enum>
+			</elements>
+		</policy>
+
+		<policy
+			name="BusEnumTraceLevel"
+			class="Machine"
+			displayName="$(string.BusEnumTraceLevel)"
+			explainText="$(string.BusEnumTraceLevel_Help)"
+			key="SYSTEM\CurrentControlSet\Services\vbusenum\Parameters"
+			presentation="$(presentation.TraceLevel)"
+		>
+			<parentCategory ref="USBIPParameters" />
+			<supportedOn ref="windows:SUPPORTED_Win2k" />
+			<elements>
+				<enum
+					id="TraceLevel"
+					valueName="BusEnumTraceLevel"
+				>
+					<item displayName="$(string.TraceLevel_Disable)">
+						<value>
+							<decimal value="0"/>
+						</value>
+					</item>
+					<item displayName="$(string.TraceLevel_Error)">
+						<value>
+							<decimal value="8947848"/>
+						</value>
+					</item>
+					<item displayName="$(string.TraceLevel_Trace)">
+						<value>
+							<decimal value="2236962"/>
+						</value>
+					</item>
+					<item displayName="$(string.TraceLevel_Info)">
+						<value>
+							<decimal value="4473924"/>
+						</value>
+					</item>
+					<item displayName="$(string.TraceLevel_Noise)">
+						<value>
+							<decimal value="111111"/>
+						</value>
+					</item>
+				</enum>
+			</elements>
+		</policy>
+
+		<policy
+			name="BusTraceLevel"
+			class="Machine"
+			displayName="$(string.BusTraceLevel)"
+			explainText="$(string.BusTraceLevel_Help)"
+			key="SYSTEM\CurrentControlSet\Services\VUSB\Parameters"
+			presentation="$(presentation.TraceLevel)"
+		>
+			<parentCategory ref="USBIPParameters" />
+			<supportedOn ref="windows:SUPPORTED_Win2k" />
+			<elements>
+				<enum
+					id="TraceLevel"
+					valueName="BusTraceLevel"
+				>
+					<item displayName="$(string.TraceLevel_Disable)">
+						<value>
+							<decimal value="0"/>
+						</value>
+					</item>
+					<item displayName="$(string.TraceLevel_Error)">
+						<value>
+							<decimal value="8947848"/>
+						</value>
+					</item>
+					<item displayName="$(string.TraceLevel_Trace)">
+						<value>
+							<decimal value="2236962"/>
+						</value>
+					</item>
+					<item displayName="$(string.TraceLevel_Info)">
+						<value>
+							<decimal value="4473924"/>
+						</value>
+					</item>
+					<item displayName="$(string.TraceLevel_Noise)">
+						<value>
+							<decimal value="111111"/>
 						</value>
 					</item>
 				</enum>
