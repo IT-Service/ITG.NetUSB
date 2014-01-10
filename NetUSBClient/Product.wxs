@@ -6,8 +6,8 @@
 	xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util"
 >
 
-	<?define ProductProjectVersion="1.1.6"?>
-	<?define ProductVersion="01.00.0054.0116"?>
+	<?define ProductProjectVersion="1.1.7"?>
+	<?define ProductVersion="01.00.0054.0117"?>
 	<?define DriversVersion="01.00.0054.0114"?>
 	<?define ProductMajorVersion="1"?>
 	<?define ProductMinorVersion="0"?>
@@ -95,7 +95,7 @@
 				IncludeMaximum="no"
 				RemoveFeatures="ALL"
 				Property="WIX_UPGRADE_DETECTED"
-				MigrateFeatures="yes"
+				MigrateFeatures="no"
 			/>
 			<UpgradeVersion
 				Minimum="01.00.0054.0112"
@@ -110,6 +110,18 @@
 			<!-- вынужден поставить RemoveFeatures="ALL" вместо RemoveFeatures="Drivers" именно потому, что используем major update -->
 			<!-- для использования minor update в дальнейшем необходимо feature Drivers вынести в корень -->
 			<!-- вынужден поставить IgnoreRemoveFailure="yes" потому как указанные версии генерируют ошибку при удалении драйвера (#29) -->
+			<UpgradeVersion
+				Minimum="01.00.0054.0114"
+				IncludeMinimum="yes"
+				Maximum="$(var.ProductVersion)"
+				IncludeMaximum="no"
+				RemoveFeatures=" "
+				Property="PRODUCTS_FOR_MINOR_UPGRADE"
+				MigrateFeatures="yes"
+				IgnoreRemoveFailure="yes"
+			/>
+			<!-- никакие компоненты не удаляю, код продукта не меняю - только дополняем установленный продукт (minor upgrade) -->
+			<!-- IgnoreRemoveFailure="yes" исключительно на всякий случай, потому как никакие компоненты удаляться не должны при обновлении -->
 		</Upgrade>
 		<Condition Message="!(loc.NewProductVersionExists)">
 			<![CDATA[NOT WIX_DOWNGRADE_DETECTED]]>
@@ -117,7 +129,7 @@
 		<InstallExecuteSequence>
 			<RemoveExistingProducts After="InstallValidate">
 				<!-- в нашем случае возможна только такая неэффективная последовательность в связи с тем,
-				что мы используем major update -->
+				что мы в некоторых случаях используем major update -->
 			</RemoveExistingProducts>
 		</InstallExecuteSequence>
 
